@@ -28,7 +28,7 @@ class JoinerWorker():
         if data_type == STOP_TYPE:
             self.ends_found += 1
         else:
-            joiner = self.get(data_type)
+            joiner = self.joiners.get(data_type)
             joiner.update(data)
         return data_type
 
