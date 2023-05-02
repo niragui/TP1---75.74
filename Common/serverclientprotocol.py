@@ -1,5 +1,5 @@
-from socket import int_to_bytes, INT_LENGTH
-from socket import read_int, read_socket, write_socket, send_int
+from socket_lib import int_to_bytes, INT_LENGTH
+from socket_lib import read_int, read_socket, write_socket, send_int
 
 import json
 
