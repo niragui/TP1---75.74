@@ -10,7 +10,7 @@ all:
 
 docker-image:
 	docker build -f ./Client/Source/client.dockerfile -t "client:latest" .
-	docker build -f ./Server/Filter/filter.dockerfile -t "filter:latest" .
+	docker build -f ./Server/Filters/filter.dockerfile -t "filter:latest" .
 	docker build -f ./Server/Joiner/joiner.dockerfile -t "joiner:latest" .
 	docker build -f ./Server/Server/server.dockerfile -t "server:latest" .
 	# Execute this command from time to time to clean up intermediate stages generated 
