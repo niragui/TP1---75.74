@@ -7,7 +7,6 @@ default: build
 
 all:
 
-
 docker-image-server:
 	docker build -f ./Server/Filters/Dockerfile -t "filter:latest" .
 	docker build -f ./Server/Joiner/Dockerfile -t "joiner:latest" .
@@ -18,8 +17,7 @@ docker-image-client:
 	docker build -f ./Client/Source/Dockerfile -t "client:latest" .
 .PHONY: docker-image-client
 
-docker-compose-up: 
-	docker-image-server
+docker-compose-up: docker-image-server
 	docker-image-client
 	docker compose -f docker-compose-dev.yaml up -d --build
 .PHONY: docker-compose-up
