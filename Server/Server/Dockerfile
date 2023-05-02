@@ -4,8 +4,8 @@ FROM python:3.9
 RUN pip install --upgrade pip
 RUN pip3 install pika
 
-COPY Server/Server ./Server
-COPY Server/InternalProtocol ./InternalProtocol
-COPY Common /Common
+COPY ./Server/Server ./Server
+COPY ./Server/InternalProtocol ./InternalProtocol
+COPY ./Common /Common
 
 CMD ["python3", "./Server/main.py"]
