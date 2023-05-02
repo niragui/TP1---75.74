@@ -35,7 +35,7 @@ def send_values():
 
 
 def callback(ch, method, properties, body):
-    data_type = worker.add_data(body)
+    data_type = worker.add_trip(body)
     if data_type == QUERY_TYPE:
         query_asked = True
         start_time = time.time()

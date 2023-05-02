@@ -51,7 +51,7 @@ class FilterWorker():
             self.process_station(entity_to_process)
             return None
         elif isinstance(entity_to_process, Weather):
-            self.process_weathers(entity_to_process)
+            self.process_weather(entity_to_process)
             return None
         elif is_stop:
             return [(STOP_TYPE, [])]
