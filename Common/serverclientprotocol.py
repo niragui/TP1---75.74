@@ -132,9 +132,10 @@ class ServerMessage():
 
 
 def read_query(socket):
-    length_message = read_int(socket)
-    data = read_socket(socket, length_message)
+    data = None
 
-    raise Exception(f"Error With Data {length_message} -> {data}")
+    while data is None:
+        length_message = read_int(socket)
+        data = read_socket(socket, length_message).decode(ENCODING)
 
     return json.loads(data)
