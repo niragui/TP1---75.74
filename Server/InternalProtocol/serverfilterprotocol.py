@@ -90,7 +90,7 @@ def parse_weather(data, city):
         raise Exception("Data Read From Line Not Correct Length For Weather")
 
     date = data[0]
-    date = datetime.strptime(date, DATE_FORMAT).date()
+    date = datetime.datetime.strptime(date, DATE_FORMAT).date()
     try:
         prec_tot = float(data[1])
     except:
