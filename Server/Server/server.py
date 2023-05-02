@@ -68,7 +68,7 @@ class Server:
         for line in lines:
             message = Message(TRIP_TYPE, line, self.city)
             bytes_to_send = message.create_message()
-            self.channel.basic_publish(exchange='',
+            self.channel.basic_publish(exchange=self.notification,
                                        routing_key=FILTER_QUEUE,
                                        body=bytes_to_send,
                                        properties=pika.BasicProperties(delivery_mode=2))
@@ -77,7 +77,7 @@ class Server:
         for line in lines:
             message = Message(STATION_TYPE, line, self.city)
             bytes_to_send = message.create_message()
-            self.channel.basic_publish(exchange=self.notification,
+            self.channel.basic_publish(exchange="",
                                        routing_key=FILTER_QUEUE,
                                        body=bytes_to_send,
                                        properties=pika.BasicProperties(delivery_mode=2))
@@ -86,7 +86,7 @@ class Server:
         for line in lines:
             message = Message(WEATHER_TYPE, line, self.city)
             bytes_to_send = message.create_message()
-            self.channel.basic_publish(exchange=self.notification,
+            self.channel.basic_publish(exchange="",
                                        routing_key=FILTER_QUEUE,
                                        body=bytes_to_send,
                                        properties=pika.BasicProperties(delivery_mode=2))
@@ -94,7 +94,7 @@ class Server:
     def publish_stops(self):
         message = Message(STOP_TYPE, "", self.city)
         bytes_to_send = message.create_message()
-        self.channel.basic_publish(exchange=self.notification,
+        self.channel.basic_publish(exchange="",
                                    routing_key=FILTER_QUEUE,
                                    body=bytes_to_send,
                                    properties=pika.BasicProperties(delivery_mode=2))
