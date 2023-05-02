@@ -15,7 +15,6 @@ TEN_MINUTES = 60 * 10
 # Wait for rabbitmq to come up
 time.sleep(10)
 
-consumer_id = os.environ["CONSUMER_ID"]
 connection = pika.BlockingConnection(
     pika.ConnectionParameters(host='rabbitmq'))
 channel = connection.channel()

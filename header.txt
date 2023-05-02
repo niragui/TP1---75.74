@@ -19,6 +19,8 @@ services:
       - testing_net
     environment:
       - PYTHONUNBUFFERED=1
+    volumes:
+      - ./Server/Server/config.ini:/config.ini
 
   joiner:
     container_name: joiner
