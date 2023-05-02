@@ -1,10 +1,9 @@
-FROM python:3.9
+FROM python:3.9.7-slim
 
-WORKDIR /
+RUN pip install --upgrade pip
+RUN pip3 install pika
 
-COPY /requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY Server/Filers /Filters
+COPY Server/InternalProtocol /InternalProtocol
 
-COPY . /Filters
-COPY ../InternalProtocol /InternalProtocol
-CMD /Filters/main.py
+CMD ["python3", "./main.py"]

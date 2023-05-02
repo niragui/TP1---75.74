@@ -39,13 +39,11 @@ def get_number(text):
   
 """
 
-
 def add_clients(amount, file):
     for i in range(1, amount+1):
         file.write(f"  filter{i}:\n")
-        file.write(f"    build:\n")
-        file.write("      context: ./Server/Filters\n")
-        file.write("      dockerfile: filter.dockerfile\n")
+        file.write(f"    container_name: filter{i}\n")
+        file.write("    image: filter:latest\n")
         file.write("    restart: on-failure\n")
         file.write("    depends_on:\n")
         file.write("      - server\n")

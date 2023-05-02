@@ -8,9 +8,8 @@ services:
       - 15672:15672
   
   server:
-    build:
-      context: ./Server
-      dockerfile: server.dockerfile
+    container_name: server
+    image: server:latest
     restart: on-failure
     depends_on:
       - rabbitmq
@@ -22,9 +21,8 @@ services:
       - PYTHONUNBUFFERED=1
 
   joiner:
-    build:
-      context: ./Server/Joiner
-      dockerfile: joiner.dockerfile
+    container_name: joiner
+    image: joiner:latest
     restart: on-failure
     depends_on:
       - rabbitmq
@@ -34,9 +32,8 @@ services:
       - PYTHONUNBUFFERED=1
     
   client:
-    build:
-      context: ./Client/Source
-      dockerfile: client.dockerfile
+    container_name: client
+    image: client:latest
     environment:
       - PYTHONUNBUFFERED=1
     networks:
@@ -50,9 +47,8 @@ services:
       - ./washington:/washington
 
   filter1:
-    build:
-      context: ./Server/Filters
-      dockerfile: filter.dockerfile
+    container_name: filter1
+    image: filter:latest
     restart: on-failure
     depends_on:
       - server
@@ -67,9 +63,8 @@ services:
 
 
   filter2:
-    build:
-      context: ./Server/Filters
-      dockerfile: filter.dockerfile
+    container_name: filter2
+    image: filter:latest
     restart: on-failure
     depends_on:
       - server
@@ -84,9 +79,8 @@ services:
 
 
   filter3:
-    build:
-      context: ./Server/Filters
-      dockerfile: filter.dockerfile
+    container_name: filter3
+    image: filter:latest
     restart: on-failure
     depends_on:
       - server
@@ -101,9 +95,8 @@ services:
 
 
   filter4:
-    build:
-      context: ./Server/Filters
-      dockerfile: filter.dockerfile
+    container_name: filter4
+    image: filter:latest
     restart: on-failure
     depends_on:
       - server
@@ -118,9 +111,8 @@ services:
 
 
   filter5:
-    build:
-      context: ./Server/Filters
-      dockerfile: filter.dockerfile
+    container_name: filter5
+    image: filter:latest
     restart: on-failure
     depends_on:
       - server

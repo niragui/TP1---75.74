@@ -8,9 +8,8 @@ services:
       - 15672:15672
   
   server:
-    build:
-      context: ./Server
-      dockerfile: server.dockerfile
+    container_name: server
+    image: server:latest
     restart: on-failure
     depends_on:
       - rabbitmq
@@ -22,9 +21,8 @@ services:
       - PYTHONUNBUFFERED=1
 
   joiner:
-    build:
-      context: ./Server/Joiner
-      dockerfile: joiner.dockerfile
+    container_name: joiner
+    image: joiner:latest
     restart: on-failure
     depends_on:
       - rabbitmq
@@ -34,9 +32,8 @@ services:
       - PYTHONUNBUFFERED=1
     
   client:
-    build:
-      context: ./Client/Source
-      dockerfile: client.dockerfile
+    container_name: client
+    image: client:latest
     environment:
       - PYTHONUNBUFFERED=1
     networks:

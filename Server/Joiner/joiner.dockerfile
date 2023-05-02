@@ -1,10 +1,9 @@
 FROM python:3.9
 
-WORKDIR /
+RUN pip install --upgrade pip
+RUN pip3 install pika
 
-COPY /requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY Server/Joiner /Joiner
+COPY Server/InternalProtocol /InternalProtocol
 
-COPY . /Joiner
-COPY ../InternalProtocol /InternalProtocol
-CMD /Joiner/main.py
+CMD ["python3", "./main.py"]
