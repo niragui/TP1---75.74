@@ -106,13 +106,10 @@ def parse_weather(data, city):
 
 
 def parse_message_line(line, type, stations, city):
-    try:
-        reader = csv.reader([line])
-        data = []
-        for row in reader:
-            data = row
-    except:
-        raise Exception(f"Problem Creating CSV Reader for {line}")
+    reader = csv.reader([line])
+    data = []
+    for row in reader:
+        data = row
 
     try:
         if type == TRIP_TYPE:
@@ -126,7 +123,7 @@ def parse_message_line(line, type, stations, city):
         else:
             raise Exception(f"Type {type} Doesn't Exist")
     except Exception as err:
-        raise Exception(f"{err} Rose While Checking {line} -> {data}")
+        raise Exception(f"{err} Rose While Checking {line}")
 
 
 def read_message(bytes_read, stations):

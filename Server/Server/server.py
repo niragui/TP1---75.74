@@ -92,7 +92,7 @@ class Server:
                                        properties=pika.BasicProperties(delivery_mode=2))
 
     def publish_stops(self):
-        message = Message(STOP_TYPE, [], self.city)
+        message = Message(STOP_TYPE, "", self.city)
         bytes_to_send = message.create_message()
         self.channel.basic_publish(exchange=self.notification,
                                    routing_key=FILTER_QUEUE,
