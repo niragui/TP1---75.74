@@ -1,0 +1,2 @@
+# Ignore all files named trips.csv
+**/trips.csv
