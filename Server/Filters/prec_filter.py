@@ -18,7 +18,7 @@ class PrecipitationFilter(Filter):
         weather = self.weathers.get(weather_id)
 
         if weather is None:
-            raise Exception(f"Weather For {city} On {start} Not Found")
+            raise Exception(f"Weather For {city} On {start} Not Found In {self.weathers.keys()}")
 
         if weather.is_rainy(PRECIPITATION_LIMIT):
             precipitation = weather.get_rain()

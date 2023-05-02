@@ -46,8 +46,9 @@ class JoinerWorker():
 
     def has_finished(self, total_filters):
         ends_found = self.ends_found >= total_filters
-
         elapsed_time = time() - self.time_ask
+
+        print(f"{ends_found} - Cause {self.ends_found}")
 
         return ends_found or elapsed_time >= TEN_MINUTES
 
