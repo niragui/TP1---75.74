@@ -57,7 +57,6 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
-      - server
     volumes:
       - ./Client/config.ini:/config.ini
       - ./montreal:/montreal
