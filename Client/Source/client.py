@@ -1,8 +1,8 @@
 import socket
 import os
 
-from Common.serverclientprotocol import TRIP_CLIENT_TYPE, STATION_CLIENT_TYPE, WEATHER_CLIENT_TYPE, CITY_CLIENT_TYPE, QUERY_CLIENT_TYPE
-from Common.serverclientprotocol import ClientMessage, send_query, read_query
+from serverclientprotocol import TRIP_CLIENT_TYPE, STATION_CLIENT_TYPE, WEATHER_CLIENT_TYPE, CITY_CLIENT_TYPE, QUERY_CLIENT_TYPE
+from serverclientprotocol import ClientMessage, send_query, read_query
 
 ENCODING = "utf-8"
 BATCH_AMOUNT = 10
