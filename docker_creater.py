@@ -46,7 +46,6 @@ def add_clients(amount, file):
         file.write("    image: filter:latest\n")
         file.write("    restart: on-failure\n")
         file.write("    depends_on:\n")
-        file.write("      - server\n")
         file.write("      rabbitmq:\n")
         file.write("        condition: service_healthy\n")
         file.write("    links:\n")

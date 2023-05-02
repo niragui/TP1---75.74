@@ -68,7 +68,6 @@ services:
     image: filter:latest
     restart: on-failure
     depends_on:
-      - server
       rabbitmq:
         condition: service_healthy
     links:
@@ -85,7 +84,6 @@ services:
     image: filter:latest
     restart: on-failure
     depends_on:
-      - server
       rabbitmq:
         condition: service_healthy
     links:
@@ -102,7 +100,6 @@ services:
     image: filter:latest
     restart: on-failure
     depends_on:
-      - server
       rabbitmq:
         condition: service_healthy
     links:
@@ -119,7 +116,6 @@ services:
     image: filter:latest
     restart: on-failure
     depends_on:
-      - server
       rabbitmq:
         condition: service_healthy
     links:
@@ -136,7 +132,6 @@ services:
     image: filter:latest
     restart: on-failure
     depends_on:
-      - server
       rabbitmq:
         condition: service_healthy
     links:
