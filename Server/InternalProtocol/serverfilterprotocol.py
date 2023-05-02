@@ -28,14 +28,14 @@ class Message():
         self.type = type
         self.content = {}
         self.content.update({"City": city})
-        self.contet.update({"Line": line})
+        self.content.update({"Line": line})
 
     def create_message(self):
         bytes = b""
         type_byted = int_to_bytes(self.type)
         bytes += type_byted
 
-        string_json = json.dumps(self.contet).encode(ENCODING)
+        string_json = json.dumps(self.content).encode(ENCODING)
 
         bytes += string_json
 
