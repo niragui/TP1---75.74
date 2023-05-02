@@ -8,19 +8,19 @@ default: build
 all:
 
 
-docker-image:
-	docker build -f ./Client/Source/Dockerfile -t "client:latest" .
+docker-image-server:
 	docker build -f ./Server/Filters/Dockerfile -t "filter:latest" .
 	docker build -f ./Server/Joiner/Dockerfile -t "joiner:latest" .
 	docker build -f ./Server/Server/Dockerfile -t "server:latest" .
-	# Execute this command from time to time to clean up intermediate stages generated 
-	# during client build (your hard drive will like this :) ). Don't left uncommented if you 
-	# want to avoid rebuilding client image every time the docker-compose-up command 
-	# is executed, even when client code has not changed
-	# docker rmi `docker images --filter label=intermediateStageToBeDeleted=true -q`
-.PHONY: docker-image
+.PHONY: docker-image-server
 
-docker-compose-up: docker-image
+docker-image-client:
+	docker build -f ./Client/Source/Dockerfile -t "client:latest" .
+.PHONY: docker-image-client
+
+docker-compose-up: 
+	docker-image-server
+	docker-image-client
 	docker compose -f docker-compose-dev.yaml up -d --build
 .PHONY: docker-compose-up
 
