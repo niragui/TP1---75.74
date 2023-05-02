@@ -106,7 +106,7 @@ def parse_weather(data, city):
 
 
 def parse_message_line(line, type, stations, city):
-    reader = csv.reader([line])
+    reader = csv.reader(line)
     data = []
     for row in reader:
         data = row
