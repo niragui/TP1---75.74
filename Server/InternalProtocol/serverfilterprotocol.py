@@ -19,8 +19,8 @@ TRIP_LENGTH = 7
 WEATHER_LENGTH = 21
 STATION_LENGTH = 5
 
-TIME_FORMAT = "%Y/%M/%D %H:%M:%S"
-DATE_FORMAT = "%Y/%M/%D"
+TIME_FORMAT = "%y/%m/%d %H:%M:%S"
+DATE_FORMAT = "%y/%m/%d"
 
 
 class Message():
