@@ -35,9 +35,12 @@ class Client():
         file_name = FILES.get(data_type)
 
         file_path = os.path.join(directory, file_name)
-        f = open(file_path, "r", encoding=ENCODING)
-        f.readline()  # Skip Header
-        return f
+        if os.path.isfile(file_path):
+            f = open(file_path, "r", encoding=ENCODING)
+            f.readline()  # Skip Header
+            return f
+        else:
+            return None
 
     def get_lines(self, file):
         lines = []
@@ -54,6 +57,8 @@ class Client():
             message = ClientMessage(CITY_CLIENT_TYPE, city)
             message.send_message(self.socket)
             file = self.get_file(city, data_type)
+            if file is None:
+                continue
             lines = self.get_lines(file)
             while True:
                 if len(lines) > 0:
