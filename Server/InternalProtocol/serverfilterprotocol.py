@@ -68,11 +68,16 @@ def parse_station(data, city):
 
     code = data[0]
     name = data[1]
-    try:
+    if len(data[2]) == 0:
+        latitude = 0
+    else:
         latitude = float(data[2])
+
+    if len(data[3]) == 0:
+        longitude = 0
+    else:
         longitude = float(data[3])
-    except:
-        raise Exception(f"Error Casting {city}-{code}")
+
     location = Point(latitude, longitude)
 
     station = Station(code, name, location, city)
