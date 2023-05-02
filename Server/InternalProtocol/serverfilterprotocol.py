@@ -26,7 +26,7 @@ DATE_FORMAT = "%m/%d/%Y"
 class Message():
     def __init__(self, type, line, city):
         self.type = type
-        self.contet = {}
+        self.content = {}
         self.content.update({"City": city})
         self.contet.update({"Line": line})
 
