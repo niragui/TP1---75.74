@@ -6,7 +6,7 @@ from filter_worker import FilterWorker
 from joinerprotocol import JoinerMessage
 from constants import STOP_TYPE
 
-READ_QUEUE = "task_queue"
+READ_TRIPS_QUEUE = "task_queue"
 WRITE_QUEUE = "joiner_queue"
 
 # Wait for rabbitmq to come up
@@ -15,8 +15,11 @@ time.sleep(10)
 consumer_id = os.environ["FILTER_ID"]
 connection = pika.BlockingConnection(
     pika.ConnectionParameters(host='rabbitmq'))
+
 channel = connection.channel()
-channel.queue_declare(queue=READ_QUEUE, durable=True)
+READ_DATA_QUEUE = channel.queue_declare(durable=True)
+channel.queue_bind(READ_DATA_QUEUE, "notification_exchange")
+channel.queue_declare(queue=READ_TRIPS_QUEUE, durable=True)
 channel.queue_declare(queue=WRITE_QUEUE, durable=True)
 
 worker = FilterWorker()
@@ -30,7 +33,16 @@ def send_value(value):
                           properties=pika.BasicProperties(delivery_mode=2))
 
 
-def callback(ch, method, properties, body):
+def callback_data(ch, method, properties, body):
+    worker.add_data(body)
+
+    if worker.received_trip():
+        channel.stop_consuming()
+
+    ch.basic_ack(delivery_tag=method.delivery_tag)
+
+
+def callback_trips(ch, method, properties, body):
     values = worker.add_data(body)
 
     if values is not None:
@@ -44,7 +56,8 @@ def callback(ch, method, properties, body):
 
 
 channel.basic_qos(prefetch_count=1)
-channel.basic_consume(queue=READ_QUEUE, on_message_callback=callback)
+channel.basic_consume(queue=READ_DATA_QUEUE, on_message_callback=callback_data)
+channel.basic_consume(queue=READ_TRIPS_QUEUE, on_message_callback=callback_trips)
 
 channel.start_consuming()
 connection.close()

@@ -1,13 +1,13 @@
 import socket
 import pika
 from constants import FILTERS_AMOUNT
-from serverfilterprotocol import Message, TRIP_TYPE, STATION_TYPE, WEATHER_TYPE, STOP_TYPE
+from serverfilterprotocol import Message, TRIP_TYPE, STATION_TYPE, WEATHER_TYPE, STOP_TYPE, TRIP_START
 from joinerprotocol import JoinerMessage
 from joinerserverprotocol import QUERY_TYPE, ENCODING
 from serverclientprotocol import read_client_message, QUERY_CLIENT_TYPE, ServerMessage
 from serverclientprotocol import CITY_CLIENT_TYPE, WEATHER_CLIENT_TYPE, TRIP_CLIENT_TYPE, STATION_CLIENT_TYPE
 
-FILTER_QUEUE = "task_queue"
+FILTER_TRIP_QUEUE = "task_queue"
 JOINER_QUEUE = "joiner_queue"
 SERVER_QUEUE = "server_queue"
 
@@ -29,11 +29,10 @@ class Server:
         self.channel.exchange_declare(exchange=self.notification,
                                       exchange_type='fanout')
 
-        self.channel.queue_declare(queue=FILTER_QUEUE, durable=True)
-        self.channel.queue_declare(queue=JOINER_QUEUE, durable=True)
-        self.channel.queue_declare(queue=SERVER_QUEUE, durable=True)
+        self.channel.queue_declare(queue=FILTER_TRIP_QUEUE, durable=True)
 
         self.query = None
+        self.sent_first_trip = False
 
     def run(self):
         client_socket, _ = self._server_socket.accept()
@@ -68,7 +67,7 @@ class Server:
             message = Message(TRIP_TYPE, line, self.city)
             bytes_to_send = message.create_message()
             self.channel.basic_publish(exchange="",
-                                       routing_key=FILTER_QUEUE,
+                                       routing_key=FILTER_TRIP_QUEUE,
                                        body=bytes_to_send,
                                        properties=pika.BasicProperties(delivery_mode=2))
 
@@ -77,7 +76,7 @@ class Server:
             message = Message(STATION_TYPE, line, self.city)
             bytes_to_send = message.create_message()
             self.channel.basic_publish(exchange=self.notification,
-                                       routing_key=FILTER_QUEUE,
+                                       routing_key="",
                                        body=bytes_to_send,
                                        properties=pika.BasicProperties(delivery_mode=2))
 
@@ -86,15 +85,24 @@ class Server:
             message = Message(WEATHER_TYPE, line, self.city)
             bytes_to_send = message.create_message()
             self.channel.basic_publish(exchange=self.notification,
-                                       routing_key=FILTER_QUEUE,
+                                       routing_key="",
                                        body=bytes_to_send,
                                        properties=pika.BasicProperties(delivery_mode=2))
 
     def publish_stops(self):
+        for _ in range(FILTERS_AMOUNT):
+            message = Message(STOP_TYPE, "", self.city)
+            bytes_to_send = message.create_message()
+            self.channel.basic_publish(exchange="",
+                                    routing_key=FILTER_TRIP_QUEUE,
+                                    body=bytes_to_send,
+                                    properties=pika.BasicProperties(delivery_mode=2))
+
+    def send_trips_start(self):
         message = Message(STOP_TYPE, "", self.city)
         bytes_to_send = message.create_message()
-        self.channel.basic_publish(exchange="",
-                                   routing_key=FILTER_QUEUE,
+        self.channel.basic_publish(exchange=self.notification,
+                                   routing_key="",
                                    body=bytes_to_send,
                                    properties=pika.BasicProperties(delivery_mode=2))
 
@@ -107,6 +115,9 @@ class Server:
             elif info_type == CITY_CLIENT_TYPE:
                 self.city = info
             elif info_type == TRIP_CLIENT_TYPE:
+                if not self.sent_first_trip:
+                    self.send_trips_start()
+                    self.sent_first_trip = True
                 self.publish_trip(info)
             elif info_type == STATION_CLIENT_TYPE:
                 self.publish_station(info)

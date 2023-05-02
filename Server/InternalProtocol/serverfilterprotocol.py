@@ -11,6 +11,7 @@ from constants import STOP_TYPE
 
 ENCODING = "utf-8"
 
+TRIP_START = -1
 TRIP_TYPE = 1
 WEATHER_TYPE = 2
 STATION_TYPE = 3
@@ -120,6 +121,8 @@ def parse_message_line(line, type, stations, city):
             return parse_weather(data, city)
         elif type == STOP_TYPE:
             return STOP_TYPE
+        elif type == TRIP_START:
+            return TRIP_START
         else:
             raise Exception(f"Type {type} Doesn't Exist")
     except Exception as err:
