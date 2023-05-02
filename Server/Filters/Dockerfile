@@ -6,4 +6,4 @@ RUN pip3 install pika
 COPY ./Server/Filters /Filters
 COPY ./Server/InternalProtocol /InternalProtocol
 
-CMD ["python3", "./main.py"]
+CMD ["python3", "Filters/main.py"]

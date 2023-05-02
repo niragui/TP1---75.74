@@ -7,4 +7,4 @@ COPY ./Server/Server ./Server
 COPY ./Server/InternalProtocol ./InternalProtocol
 COPY ./Common /Common
 
-CMD ["python3", "./Server/main.py"]
+CMD ["python3", "Server/main.py"]
