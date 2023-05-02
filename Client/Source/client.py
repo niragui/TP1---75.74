@@ -72,7 +72,8 @@ class Client():
 
     def ask_reply(self):
         send_query(self.socket)
-        self.query = read_query(self.socket)
+        while not isinstance(self.query, dict):
+            self.query = read_query(self.socket)
 
     def print_query(self):
         query_one = self.query.get(1)

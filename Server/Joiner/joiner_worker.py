@@ -74,7 +74,7 @@ class JoinerWorker():
     def get_values(self):
         values = {}
 
-        for key, joiner in self.joiners:
+        for key, joiner in self.joiners.items():
             value = joiner.get_value()
             if key == MONTREAL_FILTER:
                 value = self.get_montreal_values(value)
