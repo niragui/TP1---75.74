@@ -2,7 +2,7 @@ import pika
 import time
 import os
 
-from .filter_worker import FilterWorker
+from filter_worker import FilterWorker
 from ..InternalProtocol.joinerprotocol import JoinerMessage
 from ..InternalProtocol.constants import STOP_TYPE
 
