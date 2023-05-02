@@ -12,7 +12,7 @@ MONTREAL_FILTER = 3
 class JoinerMessage():
     def __init__(self, type, data):
         self.type = type
-        self.contet = data
+        self.data = data
 
     def create_message(self):
         bytes = b""
