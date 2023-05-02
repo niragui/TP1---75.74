@@ -123,7 +123,7 @@ def parse_message_line(line, type, stations, city):
         else:
             raise Exception(f"Type {type} Doesn't Exist")
     except Exception as err:
-        raise Exception(f"{err} Rose While Checking {line}")
+        raise Exception(f"{err} Rose While Checking {line} -> {data}")
 
 
 def read_message(bytes_read, stations):

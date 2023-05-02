@@ -7,7 +7,7 @@ from joinerprotocol import PRECIPITATION_FILTER
 from joinerprotocol import MONTREAL_FILTER
 from joinerprotocol import read_message
 from constants import STOP_TYPE
-
+from joinerserverprotocol import QUERY_TYPE
 
 MIN_QUERY_MONTERAL = 6000
 
@@ -25,9 +25,10 @@ class JoinerWorker():
     def add_trip(self, body):
         data_type, data = read_message(body)
 
+
         if data_type == STOP_TYPE:
             self.ends_found += 1
-        else:
+        elif data_type != QUERY_TYPE:
             if data_type not in self.joiners:
                 keys = list(self.joiners.keys())
                 raise Exception(f"Provided {data_type} and is not in {keys}")
