@@ -1,0 +1,69 @@
+version: '3'
+services:
+  rabbitmq:
+    build:
+      context: ./server/rabbitmq
+      dockerfile: rabbitmq.dockerfile
+    ports:
+      - 15672:15672
+  
+  server:
+    build:
+      context: ./server
+      dockerfile: server.dockerfile
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links: 
+      - rabbitmq
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  filter1:
+    build:
+      context: ./Server/Filters
+      dockerfile: filter.dockerfile
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links: 
+      - rabbitmq
+    environment:
+      - PYTHONUNBUFFERED=1
+      - FILTER_ID=1
+
+  joiner:
+    build:
+      context: ./Server/Joiner
+      dockerfile: joiner.dockerfile
+    restart: on-failure
+    depends_on:
+      - rabbitmq
+    links: 
+      - rabbitmq
+    environment:
+      - PYTHONUNBUFFERED=1
+    
+  client:
+    build:
+      context: ./Client/Source
+      dockerfile: client.dockerfile
+    entrypoint: python3 /main.py
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - testing_net
+    depends_on:
+      - server
+    volumes:
+      - ./Client/config.ini:/config.ini
+      - ./Client/montreal:/montreal
+      - ./Client/toronto:/toronto
+      - ./Client/washington:/washington
+
+networks:
+  testing_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.25.125.0/24
