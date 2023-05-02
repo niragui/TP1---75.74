@@ -16,14 +16,14 @@ FILES.update({WEATHER_CLIENT_TYPE: "weather.csv"})
 
 class Client():
     def __init__(self, server_ip, port) -> None:
-        self.server_ip = port
+        self.server_ip = server_ip
         self.port = port
         self.socket = None
         self.query = None
 
     def run(self):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.connect((self.server, self.port))
+        self.socket.connect((self.server_ip, self.port))
         self.send_values(STATION_CLIENT_TYPE)
         self.send_values(WEATHER_CLIENT_TYPE)
         self.send_values(TRIP_CLIENT_TYPE)
