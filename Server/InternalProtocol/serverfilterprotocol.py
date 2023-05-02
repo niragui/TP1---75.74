@@ -97,11 +97,11 @@ def parse_message_line(line, type, stations, city):
         data = row
 
     if type == TRIP_TYPE:
-        parse_trip(data, stations, city)
+        return parse_trip(data, stations, city)
     elif type == STATION_TYPE:
-        parse_station(data, city)
+        return parse_station(data, city)
     elif type == WEATHER_TYPE:
-        parse_weather(data, city)
+        return parse_weather(data, city)
     elif type == STOP_TYPE:
         return STOP_TYPE
     else:
