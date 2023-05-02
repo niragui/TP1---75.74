@@ -46,6 +46,6 @@ services:
       - server
     volumes:
       - ./Client/config.ini:/config.ini
-      - ./Client/montreal:/montreal
-      - ./Client/toronto:/toronto
-      - ./Client/washington:/washington
+      - ./montreal:/montreal
+      - ./toronto:/toronto
+      - ./washington:/washington
