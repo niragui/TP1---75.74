@@ -27,7 +27,7 @@ query_asked = False
 
 def send_values():
     values = worker.get_values()
-    bytes_to_send = json.dumps(values).decode(ENCODING)
+    bytes_to_send = json.dumps(values).encode(ENCODING)
     channel.basic_publish(exchange='', routing_key=WRITE_QUEUE,
                           body=bytes_to_send,
                           properties=pika.BasicProperties(delivery_mode=2))
