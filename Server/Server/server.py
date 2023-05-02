@@ -30,7 +30,6 @@ class Server:
                                       exchange_type='fanout')
 
         self.channel.queue_declare(queue=FILTER_QUEUE, durable=True)
-        self.channel.queue_bind(queue=FILTER_QUEUE, exchange=self.notification)
         self.channel.queue_declare(queue=JOINER_QUEUE, durable=True)
         self.channel.queue_declare(queue=SERVER_QUEUE, durable=True)
 
