@@ -45,7 +45,7 @@ class Message():
 
 def parse_trip(data, stations, city):
     if len(data) != TRIP_LENGTH:
-        raise Exception(f"Data Read From Line ({len(data)}) Not Correct Length For Trip ({TRIP_LENGTH})")
+        raise Exception(f"Data Read From Line ({len(data)}) Not Correct Length For Trip ({TRIP_LENGTH}) in {city}")
 
     start_time = data[0]
     start_time = datetime.datetime.strptime(start_time, TIME_FORMAT)
@@ -65,7 +65,7 @@ def parse_trip(data, stations, city):
 
 def parse_station(data, city):
     if len(data) != STATION_LENGTH:
-        raise Exception(f"Data Read From Line ({len(data)}) Not Correct Length For Station ({STATION_LENGTH})")
+        raise Exception(f"Data Read From Line ({len(data)}) Not Correct Length For Station ({STATION_LENGTH}) in {city}")
 
     code = data[0]
     name = data[1]
@@ -88,7 +88,7 @@ def parse_station(data, city):
 
 def parse_weather(data, city):
     if city != "Montreal" and len(data) != WEATHER_LENGTH:
-        raise Exception(f"Data Read From Line ({len(data)}) Not Correct Length For Weather ({WEATHER_LENGTH})")
+        raise Exception(f"Data Read From Line ({len(data)}) Not Correct Length For Weather ({WEATHER_LENGTH}) in {city}")
 
     if city == "Montreal" and len(data) != WEATHER_LENGTH_MONTREAL:
         raise Exception(f"Data Read From Line ({len(data)}) Not Correct Length For Weather ({WEATHER_LENGTH_MONTREAL})")
