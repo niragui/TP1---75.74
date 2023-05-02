@@ -17,8 +17,9 @@ docker-image-client:
 	docker build -f ./Client/Source/Dockerfile -t "client:latest" .
 .PHONY: docker-image-client
 
-docker-compose-up: docker-image-server
-	docker-image-client
+docker-compose-up:
+	make docker-image-server
+	make docker-image-client
 	docker compose -f docker-compose-dev.yaml up -d --build
 .PHONY: docker-compose-up
 
