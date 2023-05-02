@@ -49,6 +49,7 @@ class Server:
     def send_query(self, client_socket):
         message = ServerMessage(self.query)
         message.send_message(client_socket)
+        raise Exception(f"Value Sent: {self.query}")
 
     def wait_query(self):
         def read_query(ch, method, properties, body):
