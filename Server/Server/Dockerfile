@@ -6,6 +6,6 @@ RUN pip3 install haversine
 
 COPY ./Server/Server /
 COPY ./Server/InternalProtocol /
-COPY ./Common /Common
+COPY ./Common /
 
 CMD ["python3", "main.py"]
