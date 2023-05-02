@@ -31,7 +31,6 @@ def send_values():
     channel.basic_publish(exchange='', routing_key=WRITE_QUEUE,
                           body=bytes_to_send,
                           properties=pika.BasicProperties(delivery_mode=2))
-    raise Exception(f"Values Sent: {bytes_to_send}")
 
 
 def callback(ch, method, properties, body):
