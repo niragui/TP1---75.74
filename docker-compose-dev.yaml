@@ -37,7 +37,6 @@ services:
     build:
       context: ./Client/Source
       dockerfile: client.dockerfile
-    entrypoint: python3 /main.py
     environment:
       - PYTHONUNBUFFERED=1
     networks:
@@ -46,9 +45,9 @@ services:
       - server
     volumes:
       - ./Client/config.ini:/config.ini
-      - ./Client/montreal:/montreal
-      - ./Client/toronto:/toronto
-      - ./Client/washington:/washington
+      - ./montreal:/montreal
+      - ./toronto:/toronto
+      - ./washington:/washington
 
   filter1:
     build:

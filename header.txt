@@ -37,7 +37,6 @@ services:
     build:
       context: ./Client/Source
       dockerfile: client.dockerfile
-    entrypoint: python3 /main.py
     environment:
       - PYTHONUNBUFFERED=1
     networks:
