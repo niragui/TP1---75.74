@@ -54,7 +54,7 @@ class Server:
         def read_query(ch, method, properties, body):
             self.query = body.decode(ENCODING)
             self.channel.stop_consuming()
-        self.channel.basic_consume(queue=SERVER_QUEUE, on_message_callback=self.read_query)
+        self.channel.basic_consume(queue=SERVER_QUEUE, on_message_callback=read_query)
 
     def ask_query(self):
         message = JoinerMessage(QUERY_TYPE, [])

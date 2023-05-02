@@ -16,7 +16,8 @@ WEATHER_TYPE = 2
 STATION_TYPE = 3
 
 TRIP_LENGTH = 7
-WEATHER_LENGTH = 21
+WEATHER_LENGTH_MONTREAL = 21
+WEATHER_LENGTH = 20
 STATION_LENGTH = 5
 
 TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
@@ -86,8 +87,11 @@ def parse_station(data, city):
 
 
 def parse_weather(data, city):
-    if len(data) != WEATHER_LENGTH:
+    if city != "Montreal" and len(data) != WEATHER_LENGTH:
         raise Exception(f"Data Read From Line ({len(data)}) Not Correct Length For Weather ({WEATHER_LENGTH})")
+
+    if city == "Montreal" and len(data) != WEATHER_LENGTH_MONTREAL:
+        raise Exception(f"Data Read From Line ({len(data)}) Not Correct Length For Weather ({WEATHER_LENGTH_MONTREAL})")
 
     date = data[0]
     date = datetime.datetime.strptime(date, DATE_FORMAT).date()
