@@ -29,7 +29,6 @@ class Server:
         self.channel.exchange_declare(exchange=self.notification,
                                       exchange_type='fanout')
 
-
         self.channel.queue_declare(queue=FILTER_QUEUE, durable=True)
         self.channel.queue_bind(queue=FILTER_QUEUE, exchange=self.notification)
         self.channel.queue_declare(queue=JOINER_QUEUE, durable=True)
@@ -49,11 +48,11 @@ class Server:
     def send_query(self, client_socket):
         message = ServerMessage(self.query)
         message.send_message(client_socket)
-        raise Exception(f"Value Sent: {self.query}")
 
     def wait_query(self):
         def read_query(ch, method, properties, body):
             self.query = body.decode(ENCODING)
+            raise Exception(f"Value Read: {body}")
             self.channel.stop_consuming()
         self.channel.basic_consume(queue=SERVER_QUEUE, on_message_callback=read_query)
 
