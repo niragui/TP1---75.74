@@ -28,8 +28,12 @@ class JoinerWorker():
         if data_type == STOP_TYPE:
             self.ends_found += 1
         else:
+            if data_type not in self.joiners:
+                keys = list(self.joines.keys())
+                raise Exception(f"Provided {data_type} and is not in {keys}")
             joiner = self.joiners.get(data_type)
             joiner.update(data)
+
         return data_type
 
     def has_finished(self, total_filters):
