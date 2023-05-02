@@ -12,7 +12,7 @@ services:
       test: ["CMD", "curl", "-f", "htttp://localhost:15672"]
       interval: 10s
       timeout: 5s
-      retires: 10
+      retries: 10
     environment:
       - RABBITMQ_LOGS=-
   
