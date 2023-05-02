@@ -17,7 +17,7 @@ connection = pika.BlockingConnection(
     pika.ConnectionParameters(host='rabbitmq'))
 
 channel = connection.channel()
-READ_DATA_QUEUE = channel.queue_declare(queue="", durable=True)
+READ_DATA_QUEUE = channel.queue_declare(queue="", durable=True).method.queue
 channel.queue_bind(READ_DATA_QUEUE, "notification_exchange")
 channel.queue_declare(queue=READ_TRIPS_QUEUE, durable=True)
 channel.queue_declare(queue=WRITE_QUEUE, durable=True)
