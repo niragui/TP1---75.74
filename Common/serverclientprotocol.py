@@ -135,4 +135,6 @@ def read_query(socket):
     length_message = read_int(socket)
     data = read_socket(socket, length_message)
 
+    raise Exception(f"Error With Data {length_message} -> {data}")
+
     return json.loads(data)

@@ -10,7 +10,6 @@ from joinerserverprotocol import QUERY_TYPE, ENCODING
 
 READ_QUEUE = "joiner_queue"
 WRITE_QUEUE = "server_queue"
-TEN_MINUTES = 60 * 10
 
 # Wait for rabbitmq to come up
 time.sleep(10)
@@ -36,16 +35,9 @@ def send_values():
 
 def callback(ch, method, properties, body):
     data_type = worker.add_trip(body)
-    if data_type == QUERY_TYPE:
-        query_asked = True
-        start_time = time.time()
-    if query_asked:
-        if worker.has_finished(FILTERS_AMOUNT):
-            send_values()
-            channel.stop_consuming()
-        elapsed_time = time.time() - start_time
-        if elapsed_time >= TEN_MINUTES:
-            print("Ten Minutes Have Passed, assuming one filter broke down")
+    if worker.has_finished(FILTERS_AMOUNT):
+        send_values()
+        channel.stop_consuming()
 
     ch.basic_ack(delivery_tag=method.delivery_tag)
 

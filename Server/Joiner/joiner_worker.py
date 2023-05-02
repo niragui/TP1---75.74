@@ -1,3 +1,5 @@
+from time import time
+
 from average_dict_joiner import AverageDictJoiner
 from sum_dict_joiner import SumDictJoiner
 from average_joiner import AverageJoiner
@@ -10,6 +12,7 @@ from constants import STOP_TYPE
 from joinerserverprotocol import QUERY_TYPE
 
 MIN_QUERY_MONTERAL = 6000
+TEN_MINUTES = 60 * 10
 
 class JoinerWorker():
     def __init__(self):
@@ -21,13 +24,18 @@ class JoinerWorker():
         self.joiners.update({YEAR_FILTER: year_joiner})
         self.joiners.update({MONTREAL_FILTER: mont_joiner})
         self.ends_found = 0
+        self.query_asked = False
+        self.time_ask = None
 
     def add_trip(self, body):
         data_type, data = read_message(body)
 
         if data_type == STOP_TYPE:
             self.ends_found += 1
-        elif data_type != QUERY_TYPE:
+        elif data_type == QUERY_TYPE:
+            self.query_asked = True
+            self.time_ask = time()
+        else:
             if data_type not in self.joiners:
                 keys = list(self.joiners.keys())
                 raise Exception(f"Provided {data_type} and is not in {keys}")
@@ -37,7 +45,11 @@ class JoinerWorker():
         return data_type
 
     def has_finished(self, total_filters):
-        return self.ends_found >= total_filters
+        ends_found = self.ends_found >= total_filters
+
+        elapsed_time = time() - self.time_ask
+
+        return ends_found or elapsed_time >= TEN_MINUTES
 
     def get_montreal_values(self, values):
         aux = []
