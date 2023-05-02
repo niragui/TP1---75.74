@@ -9,7 +9,7 @@ services:
     networks:
       - testing_net
     healthcheck:
-      test: ["CMD", "curl", "-f", "htttp://localhost:15672"]
+      test: ["CMD", "curl", "-f", "http://localhost:15672"]
       interval: 10s
       timeout: 5s
       retries: 10
