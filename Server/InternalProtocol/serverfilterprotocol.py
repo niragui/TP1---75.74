@@ -104,6 +104,8 @@ def parse_message_line(line, type, stations, city):
         parse_weather(data, city)
     elif type == STOP_TYPE:
         return STOP_TYPE
+    else:
+        raise Exception(f"Type {type} Doesn't Exist")
 
 
 def read_message(bytes_read, stations):
