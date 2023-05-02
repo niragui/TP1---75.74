@@ -13,11 +13,11 @@ SERVER_QUEUE = "server_queue"
 
 
 class Server:
-    def __init__(self, port, listen_backlog, agencies_to_check):
+    def __init__(self, port):
         # Initialize server socket
         self._server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self._server_socket.bind(('', port))
-        self._server_socket.listen(listen_backlog)
+        self._server_socket.listen()
         self.is_awake = True
         self.city = None
         self.mode = None
@@ -38,14 +38,6 @@ class Server:
         self.query = None
 
     def run(self):
-        """
-        Dummy Server loop
-
-        Server that accept a new connections and establishes a
-        communication with a client. After client with communucation
-        finishes, servers starts to accept new connections again
-        """
-
         client_socket, _ = self._server_socket.accept()
         self.__handle_client_connection(client_socket)
         self.publish_stops()
@@ -108,13 +100,6 @@ class Server:
                                    properties=pika.BasicProperties(delivery_mode=2))
 
     def __handle_client_connection(self, client_sock):
-        """
-        Read message from a specific client socket and closes the socket
-
-        If a problem arises in the communication with the client, the
-        client socket will also be closed
-        """
-
         while True:
             info_type, info = read_client_message(client_sock)
             if info_type == QUERY_CLIENT_TYPE:
