@@ -52,8 +52,8 @@ class Server:
     def wait_query(self):
         def read_query(ch, method, properties, body):
             self.query = body.decode(ENCODING)
-            raise Exception(f"Value Read: {body}")
-            self.channel.stop_consuming()
+            if self.query is not None:
+                self.channel.stop_consuming()
         self.channel.basic_consume(queue=SERVER_QUEUE, on_message_callback=read_query)
 
     def ask_query(self):
