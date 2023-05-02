@@ -36,6 +36,7 @@ class Client():
 
         file_path = os.path.join(directory, file_name)
         f = open(file_path, "r", encoding=ENCODING)
+        f.readline()  # Skip Header
         return f
 
     def get_lines(self, file):
