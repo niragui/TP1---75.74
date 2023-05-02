@@ -4,9 +4,9 @@ import os
 import json
 
 
-from .joiner_worker import JoinerWorker
-from ..InternalProtocol.constants import FILTERS_AMOUNT
-from ..InternalProtocol.joinerserverprotocol import QUERY_TYPE, ENCODING
+from joiner_worker import JoinerWorker
+from constants import FILTERS_AMOUNT
+from joinerserverprotocol import QUERY_TYPE, ENCODING
 
 READ_QUEUE = "joiner_queue"
 WRITE_QUEUE = "server_queue"

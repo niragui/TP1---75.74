@@ -1,8 +1,8 @@
-from .filter import Filter
+from filter import Filter
 from typing import Dict
-from ..InternalProtocol.trip import Trip
-from ..InternalProtocol.weather import Weather
-from ..InternalProtocol.joinerprotocol import YEAR_FILTER
+from trip import Trip
+from weather import Weather
+from joinerprotocol import YEAR_FILTER
 
 PRECIPITATION_LIMIT = 30
 MONTREAL = "Montreal"

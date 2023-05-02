@@ -1,6 +1,6 @@
 from typing import Dict
-from ..InternalProtocol.trip import Trip
-from ..InternalProtocol.weather import Weather
+from trip import Trip
+from weather import Weather
 
 
 class Filter():

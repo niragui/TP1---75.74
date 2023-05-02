@@ -1,8 +1,8 @@
-from .filter import Filter
+from filter import Filter
 from typing import Dict
-from ..InternalProtocol.trip import Trip
-from ..InternalProtocol.weather import Weather
-from ..InternalProtocol.joinerprotocol import PRECIPITATION_FILTER
+from trip import Trip
+from weather import Weather
+from joinerprotocol import PRECIPITATION_FILTER
 
 PRECIPITATION_LIMIT = 30
 

@@ -2,7 +2,7 @@
 
 from configparser import ConfigParser
 import os
-from .client import Client
+from client import Client
 
 
 def initialize_config():

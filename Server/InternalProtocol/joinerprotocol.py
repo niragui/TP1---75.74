@@ -1,6 +1,6 @@
 import json
 
-from .common import int_to_bytes, int_from_bytes, INT_LENGTH
+from common import int_to_bytes, int_from_bytes, INT_LENGTH
 
 ENCODING = "utf-8"
 

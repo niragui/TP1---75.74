@@ -2,12 +2,12 @@ import json
 import datetime
 import csv
 
-from .trip import Trip
-from .weather import Weather
-from .station import Station
-from .point import Point
-from .common import int_to_bytes, int_from_bytes, INT_LENGTH
-from .constants import STOP_TYPE
+from trip import Trip
+from weather import Weather
+from station import Station
+from point import Point
+from common import int_to_bytes, int_from_bytes, INT_LENGTH
+from constants import STOP_TYPE
 
 ENCODING = "utf-8"
 

@@ -1,12 +1,12 @@
-from .average_dict_joiner import AverageDictJoiner
-from .sum_dict_joiner import SumDictJoiner
-from .average_joiner import AverageJoiner
+from average_dict_joiner import AverageDictJoiner
+from sum_dict_joiner import SumDictJoiner
+from average_joiner import AverageJoiner
 
-from ..InternalProtocol.joinerprotocol import YEAR_FILTER
-from ..InternalProtocol.joinerprotocol import PRECIPITATION_FILTER
-from ..InternalProtocol.joinerprotocol import MONTREAL_FILTER
-from ..InternalProtocol.joinerprotocol import read_message
-from ..InternalProtocol.constants import STOP_TYPE
+from joinerprotocol import YEAR_FILTER
+from joinerprotocol import PRECIPITATION_FILTER
+from joinerprotocol import MONTREAL_FILTER
+from joinerprotocol import read_message
+from constants import STOP_TYPE
 
 
 MIN_QUERY_MONTERAL = 6000

@@ -3,8 +3,8 @@ import time
 import os
 
 from filter_worker import FilterWorker
-from ..InternalProtocol.joinerprotocol import JoinerMessage
-from ..InternalProtocol.constants import STOP_TYPE
+from joinerprotocol import JoinerMessage
+from constants import STOP_TYPE
 
 READ_QUEUE = "task_queue"
 WRITE_QUEUE = "joiner_queue"

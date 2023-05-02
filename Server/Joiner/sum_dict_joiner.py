@@ -1,4 +1,4 @@
-from .joiner import Joiner
+from joiner import Joiner
 
 
 class SumDictJoiner(Joiner):

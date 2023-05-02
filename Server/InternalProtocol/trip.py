@@ -1,5 +1,5 @@
 from datetime import datetime, date
-from .station import Station
+from station import Station
 
 RAINY_DAY_PRECIPITATION = 30
 

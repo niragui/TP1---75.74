@@ -1,5 +1,5 @@
 from configparser import ConfigParser
-from .server import Server
+from server import Server
 import os
 
 

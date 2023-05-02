@@ -1,12 +1,12 @@
-from .prec_filter import PrecipitationFilter
-from .year_filter import YearFilter
-from .montreal_filter import MontrealFilter
+from prec_filter import PrecipitationFilter
+from year_filter import YearFilter
+from montreal_filter import MontrealFilter
 
-from ..InternalProtocol.serverfilterprotocol import read_message
-from ..InternalProtocol.constants import STOP_TYPE
-from ..InternalProtocol.trip import Trip
-from ..InternalProtocol.weather import Weather
-from ..InternalProtocol.station import Station
+from serverfilterprotocol import read_message
+from constants import STOP_TYPE
+from trip import Trip
+from weather import Weather
+from station import Station
 
 
 class FilterWorker():

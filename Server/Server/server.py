@@ -1,11 +1,11 @@
 import socket
 import pika
-from ..InternalProtocol.constants import FILTERS_AMOUNT
-from ..InternalProtocol.serverfilterprotocol import Message, TRIP_TYPE, STATION_TYPE, WEATHER_TYPE, STOP_TYPE
-from ..InternalProtocol.joinerprotocol import JoinerMessage
-from ..InternalProtocol.joinerserverprotocol import QUERY_TYPE, ENCODING
-from ..Common.serverclientprotocol import read_client_message, QUERY_CLIENT_TYPE, ServerMessage
-from ..Common.serverclientprotocol import CITY_CLIENT_TYPE, WEATHER_CLIENT_TYPE, TRIP_CLIENT_TYPE, STATION_CLIENT_TYPE
+from constants import FILTERS_AMOUNT
+from serverfilterprotocol import Message, TRIP_TYPE, STATION_TYPE, WEATHER_TYPE, STOP_TYPE
+from joinerprotocol import JoinerMessage
+from joinerserverprotocol import QUERY_TYPE, ENCODING
+from serverclientprotocol import read_client_message, QUERY_CLIENT_TYPE, ServerMessage
+from serverclientprotocol import CITY_CLIENT_TYPE, WEATHER_CLIENT_TYPE, TRIP_CLIENT_TYPE, STATION_CLIENT_TYPE
 
 FILTER_QUEUE = "task_queue"
 JOINER_QUEUE = "joiner_queue"
