@@ -6,15 +6,25 @@ services:
       dockerfile: rabbitmq.dockerfile
     ports:
       - 15672:15672
+    networks:
+      - testing_net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "htttp://localhost:15672"]
+      interval: 10s
+      timeout: 5s
+      retires: 10
+    environment:
+      - RABBITMQ_LOGS=-
   
   server:
     container_name: server
     image: server:latest
     restart: on-failure
     depends_on:
-      - rabbitmq
+      rabbitmq:
+        condition: service_healthy
     links: 
-      - rabbitmq    
+      - rabbitmq
     networks:
       - testing_net
     environment:
@@ -28,9 +38,12 @@ services:
     image: joiner:latest
     restart: on-failure
     depends_on:
-      - rabbitmq
+      rabbitmq:
+        condition: service_healthy
     links: 
       - rabbitmq
+    networks:
+      - testing_net
     environment:
       - PYTHONUNBUFFERED=1
     
@@ -42,6 +55,8 @@ services:
     networks:
       - testing_net
     depends_on:
+      rabbitmq:
+        condition: service_healthy
       - server
     volumes:
       - ./Client/config.ini:/config.ini
