@@ -103,9 +103,9 @@ def read_client_message(socket):
     if message_type == QUERY_CLIENT_TYPE:
         return QUERY_CLIENT_TYPE, None
     elif message_type == CITY_CLIENT_TYPE:
-        return CITY_CLIENT_TYPE, read_city()
+        return CITY_CLIENT_TYPE, read_city(socket)
     else:
-        return message_type, read_lines()
+        return message_type, read_lines(socket)
 
 
 class ServerMessage():
