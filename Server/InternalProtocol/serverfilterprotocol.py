@@ -68,8 +68,11 @@ def parse_station(data, city):
 
     code = data[0]
     name = data[1]
-    latitude = float(data[2])
-    longitude = float(data[3])
+    try:
+        latitude = float(data[2])
+        longitude = float(data[3])
+    except:
+        raise Exception(f"Error Casting {city}-{code}")
     location = Point(latitude, longitude)
 
     station = Station(code, name, location, city)
@@ -83,7 +86,10 @@ def parse_weather(data, city):
 
     date = data[0]
     date = datetime.strptime(date, DATE_FORMAT).date()
-    prec_tot = float(data[1])
+    try:
+        prec_tot = float(data[1])
+    except:
+        raise Exception(f"Error Casting {city}-{date}")
 
     weather = Weather(date, prec_tot, city)
 
