@@ -111,16 +111,19 @@ def parse_message_line(line, type, stations, city):
     for row in reader:
         data = row
 
-    if type == TRIP_TYPE:
-        return parse_trip(data, stations, city)
-    elif type == STATION_TYPE:
-        return parse_station(data, city)
-    elif type == WEATHER_TYPE:
-        return parse_weather(data, city)
-    elif type == STOP_TYPE:
-        return STOP_TYPE
-    else:
-        raise Exception(f"Type {type} Doesn't Exist")
+    try:
+        if type == TRIP_TYPE:
+            return parse_trip(data, stations, city)
+        elif type == STATION_TYPE:
+            return parse_station(data, city)
+        elif type == WEATHER_TYPE:
+            return parse_weather(data, city)
+        elif type == STOP_TYPE:
+            return STOP_TYPE
+        else:
+            raise Exception(f"Type {type} Doesn't Exist")
+    except Exception as err:
+        raise Exception(f"{err} Rose While Checking {line}")
 
 
 def read_message(bytes_read, stations):

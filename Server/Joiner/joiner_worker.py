@@ -29,7 +29,7 @@ class JoinerWorker():
             self.ends_found += 1
         else:
             if data_type not in self.joiners:
-                keys = list(self.joines.keys())
+                keys = list(self.joiners.keys())
                 raise Exception(f"Provided {data_type} and is not in {keys}")
             joiner = self.joiners.get(data_type)
             joiner.update(data)
