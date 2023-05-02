@@ -49,7 +49,7 @@ class JoinerWorker():
         before = self.time_ask
         if before is None:
             before = time()
-        elapsed_time = time() - self.time_ask
+        elapsed_time = time() - before
 
         return ends_found or elapsed_time >= TEN_MINUTES
 

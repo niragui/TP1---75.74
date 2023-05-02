@@ -30,6 +30,7 @@ class Server:
                                       exchange_type='fanout')
 
         self.channel.queue_declare(queue=FILTER_TRIP_QUEUE, durable=True)
+        self.channel.queue_declare(queue=SERVER_QUEUE, durable=True)
 
         self.query = None
         self.sent_first_trip = False
