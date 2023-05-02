@@ -5,8 +5,8 @@ WORKDIR /
 COPY /requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY /Server/Server /Server
-COPY /Server/InternalProtocol /InternalProtocol
-COPY /Common /Common
+COPY . /Server
+COPY ../InternalProtocol /InternalProtocol
+COPY .../Common /Common
 
 CMD /Server.main.py
