@@ -7,7 +7,8 @@ PRECIPITATION_LIMIT = 30
 
 class RainFilter():
     def __init__(self, trip: Trip, weathers: Dict[str, Weather]):
-        super().__init__(trip, weathers, PRECIPITATION_FILTER)
+        self.trip = trip
+        self.weathers = weathers
 
     def run(self):
         city = self.trip.get_city()

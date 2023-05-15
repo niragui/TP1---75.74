@@ -1,9 +1,8 @@
 from datetime import datetime, date
 from station import Station
 
-RAINY_DAY_PRECIPITATION = 30
-
 TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
+
 
 class Trip():
     def __init__(self, start_station: str, end_station: str,
