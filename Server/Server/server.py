@@ -5,7 +5,7 @@ from joinerserverprotocol import ENCODING
 from serverclientprotocol import read_client_message, QUERY_CLIENT_TYPE, ServerMessage
 from serverclientprotocol import CITY_CLIENT_TYPE, WEATHER_CLIENT_TYPE, TRIP_CLIENT_TYPE, STATION_CLIENT_TYPE
 
-DATA_QUEUE = "task_queue"
+DATA_QUEUE = "data_queue"
 SERVER_QUEUE = "server_queue"
 
 
