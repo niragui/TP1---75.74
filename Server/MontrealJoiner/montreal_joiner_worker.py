@@ -30,6 +30,7 @@ class MontrealJoinerWorker():
         data_type, data = read_message(body)
 
         if data_type == STOP_TYPE:
+            print("Stop Received")
             self.ends_found += 1
             self.time_ask = time()
         else:

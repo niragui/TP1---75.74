@@ -31,6 +31,7 @@ def callback_data(ch, method, properties, body):
     worker.add_data(body)
 
     if worker.received_trip():
+        print(f"{consumer_id} Has Finsihed Reading Stations")
         channel.stop_consuming()
 
     ch.basic_ack(delivery_tag=method.delivery_tag)
