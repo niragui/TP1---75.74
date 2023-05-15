@@ -94,7 +94,7 @@ def parse_trips(data):
     return trips
 
 
-def parse_stations(data, city):
+def parse_stations(data):
     stations = []
 
     for data_station in data:
@@ -112,7 +112,7 @@ def parse_stations(data, city):
     return stations
 
 
-def parse_weathers(data, city):
+def parse_weathers(data):
     weathers = []
 
     for data_weather in data:
