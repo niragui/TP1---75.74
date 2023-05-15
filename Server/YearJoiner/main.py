@@ -28,6 +28,7 @@ def callback(ch, method, properties, body):
     if worker.has_finished():
         print(f"Year Joiner Has Finsihed Its Work")
         worker.send_query()
+        print(f"Year Joiner Has Sent The Query")
         channel.stop_consuming()
 
     ch.basic_ack(delivery_tag=method.delivery_tag)

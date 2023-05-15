@@ -53,6 +53,8 @@ class Server:
             print(f"Querys Received: {self.querys_sent}")
             if self.querys_sent >= 3:
                 self.channel.stop_consuming()
+            else:
+                print("A Seguir Esperando Querys")
 
         self.channel.basic_qos(prefetch_count=1)
         self.channel.basic_consume(queue=SERVER_QUEUE, on_message_callback=read_query)
