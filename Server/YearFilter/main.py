@@ -5,6 +5,7 @@ import os
 from year_filter_worker import YearFilterWorker
 
 READ_TRIPS_QUEUE = "year_trips_queue"
+STATIONS_EXCHANGE = "stations"
 
 # Wait for rabbitmq to come up
 time.sleep(20)
@@ -16,8 +17,10 @@ connection = pika.BlockingConnection(
 
 channel = connection.channel()
 
+channel.exchange_declare(exchange=STATIONS_EXCHANGE, exchange_type='fanout')
+
 READ_DATA_QUEUE = channel.queue_declare(queue="", durable=True).method.queue
-channel.queue_bind(READ_DATA_QUEUE, "stations")
+channel.queue_bind(READ_DATA_QUEUE, STATIONS_EXCHANGE)
 
 channel.queue_declare(queue=READ_TRIPS_QUEUE, durable=True)
 

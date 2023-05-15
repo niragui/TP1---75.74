@@ -5,6 +5,7 @@ import os
 from rain_filter_worker import RainFilterWorker
 
 READ_TRIPS_QUEUE = "rain_trips_queue"
+WEATHERS_EXCHANGE = "weathers"
 
 # Wait for rabbitmq to come up
 time.sleep(20)
@@ -16,8 +17,10 @@ connection = pika.BlockingConnection(
 
 channel = connection.channel()
 
+channel.exchange_declare(exchange=WEATHERS_EXCHANGE, exchange_type='fanout')
+
 READ_DATA_QUEUE = channel.queue_declare(queue="", durable=True).method.queue
-channel.queue_bind(READ_DATA_QUEUE, "weathers")
+channel.queue_bind(READ_DATA_QUEUE, WEATHERS_EXCHANGE)
 
 channel.queue_declare(queue=READ_TRIPS_QUEUE, durable=True)
 
