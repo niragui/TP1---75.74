@@ -74,7 +74,7 @@ class MontrealFilterWorker():
         if ent_type == TRIP_TYPE:
             self.process_trips(entity)
         elif ent_type == STATION_TYPE:
-            self.process_weather(entity)
+            self.process_stations(entity)
         elif ent_type == STOP_TYPE:
             self.stops_received += 1
         elif ent_type == FIRST_TRIP:
