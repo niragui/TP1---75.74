@@ -5,8 +5,8 @@ class AverageJoiner():
         super().__init__()
 
     def update(self, new_value):
-        if not isinstance(new_value, int):
-            error = "AverageJoiner Expect An Int, "
+        if not isinstance(new_value, float) and not isinstance(new_value, int):
+            error = "AverageJoiner Expect An Int/Float, "
             error += f"{new_value} is {type(new_value)}"
             raise Exception(error)
         if self.amount == 0:

@@ -5,17 +5,17 @@ class AverageDictJoiner():
 
     def check_update_value(self, new_value):
         if len(new_value) != 2:
-            error = "AverageJoiner Expect A Tuple (Str, Int)"
+            error = "AverageJoiner Expect A Tuple (Str, Int/Float)"
             error += f"{new_value} is not this"
             raise Exception(error)
 
         if not isinstance(new_value[0], str):
-            error = "AverageJoiner Expect A Tuple (Str, Int)"
+            error = "AverageJoiner Expect A Tuple (Str, Int/Float)"
             error += f"{new_value} is not this"
             raise Exception(error)
 
-        if not isinstance(new_value[1], int):
-            error = "AverageJoiner Expect A Tuple (Str, Int)"
+        if not isinstance(new_value[1], float) and not isinstance(new_value[1], int):
+            error = "AverageJoiner Expect A Tuple (Str, Int/Float)"
             error += f"{new_value} is not this"
             raise Exception(error)
 
