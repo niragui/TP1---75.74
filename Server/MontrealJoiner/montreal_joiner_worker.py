@@ -67,7 +67,7 @@ class MontrealJoinerWorker():
         return {3: parsed_values}
 
     def send_query(self):
-        value = self.send_values()
+        value = self.get_values()
 
         bytes_to_send = json.dumps(value).encode(ENCODING)
 
