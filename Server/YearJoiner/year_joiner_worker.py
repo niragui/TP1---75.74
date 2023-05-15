@@ -39,8 +39,8 @@ class YearJoinerWorker():
                 self.names.update({code: name})
                 self.joiner.update((value[0], value[2]))
 
-    def has_finished(self, total_filters):
-        ends_found = self.ends_found >= total_filters
+    def has_finished(self):
+        ends_found = self.ends_found >= self.filters
         before = self.time_ask
         if before is None:
             before = time()
