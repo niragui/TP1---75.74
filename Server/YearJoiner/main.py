@@ -5,7 +5,7 @@ import json
 
 from year_joiner_worker import YearJoinerWorker
 
-READ_QUEUE = "joiner_queue"
+READ_QUEUE = "year_joiner_queue"
 WRITE_QUEUE = "server_queue"
 
 # Wait for rabbitmq to come up

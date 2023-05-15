@@ -5,7 +5,7 @@ import json
 
 from montreal_joiner_worker import MontrealJoinerWorker
 
-READ_QUEUE = "joiner_queue"
+READ_QUEUE = "montreal_joiner_queue"
 WRITE_QUEUE = "server_queue"
 
 # Wait for rabbitmq to come up

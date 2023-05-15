@@ -7,7 +7,7 @@ from rain_filter_worker import RainFilterWorker
 READ_TRIPS_QUEUE = "rain_trips_queue"
 
 # Wait for rabbitmq to come up
-time.sleep(10)
+time.sleep(20)
 
 consumer_id = os.environ["FILTER_ID"]
 parsers = int(os.environ["PARSERS"])

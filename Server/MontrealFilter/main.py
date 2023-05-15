@@ -7,7 +7,7 @@ from montreal_filter_worker import MontrealFilterWorker
 READ_TRIPS_QUEUE = "montreal_trips_queue"
 
 # Wait for rabbitmq to come up
-time.sleep(10)
+time.sleep(20)
 
 consumer_id = os.environ["FILTER_ID"]
 parsers = int(os.environ["PARSERS"])

@@ -5,7 +5,7 @@ import json
 
 from rain_joiner_worker import RainJoinerWorker
 
-READ_QUEUE = "joiner_queue"
+READ_QUEUE = "rain_joiner_queue"
 WRITE_QUEUE = "server_queue"
 
 # Wait for rabbitmq to come up
