@@ -27,6 +27,7 @@ class Server:
         self.channel.queue_declare(queue=SERVER_QUEUE, durable=True)
 
         self.query = None
+        self.querys_sent = 0
         self.sent_first_trip = False
 
     def run(self):
@@ -41,12 +42,13 @@ class Server:
         message.send_message(client_socket)
 
     def wait_query(self, client_socket):
-        querys_sent = 0
+        self.querys_sent = 0
         def read_query(ch, method, properties, body):
             self.query = body.decode(ENCODING)
             self.send_query(client_socket)
-            querys_sent += 1
-            if querys_sent >= 3:
+            self.querys_sent += 1
+            print(f"Querys Received: {self.querys_sent}")
+            if self.querys_sent >= 3:
                 self.channel.stop_consuming()
         self.channel.basic_consume(queue=SERVER_QUEUE, on_message_callback=read_query)
 
