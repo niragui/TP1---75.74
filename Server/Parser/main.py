@@ -8,7 +8,7 @@ from constants import STOP_TYPE
 DATA_QUEUE = "data_queue"
 
 # Wait for rabbitmq to come up
-time.sleep(10)
+time.sleep(20)
 
 consumer_id = os.environ["PARSER_ID"]
 rains = int(os.environ["RAIN"])

@@ -8,7 +8,7 @@ READ_TRIPS_QUEUE = "montreal_trips_queue"
 STATIONS_EXCHANGE = "stations"
 
 # Wait for rabbitmq to come up
-time.sleep(20)
+time.sleep(10)
 
 consumer_id = os.environ["FILTER_ID"]
 parsers = int(os.environ["PARSERS"])
