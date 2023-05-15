@@ -32,20 +32,6 @@ services:
     volumes:
       - ./Server/Server/config.ini:/config.ini
 
-  joiner:
-    container_name: joiner
-    image: joiner:latest
-    restart: on-failure
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-    links: 
-      - rabbitmq
-    networks:
-      - testing_net
-    environment:
-      - PYTHONUNBUFFERED=1
-    
   client:
     container_name: client
     image: client:latest
@@ -61,10 +47,68 @@ services:
       - ./montreal:/montreal
       - ./toronto:/toronto
       - ./washington:/washington
+    
 
-  filter1:
-    container_name: filter1
-    image: filter:latest
+  parser1:
+    container_name: parser1
+    image: parser:latest
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - rabbitmq
+    networks:
+      - testing_net
+    environment:
+      - PARSER_ID=1
+      - RAIN=2
+      - MONTREAL=3
+      - YEAR=5
+      - PYTHONUNBUFFERED=1
+
+
+  parser2:
+    container_name: parser2
+    image: parser:latest
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - rabbitmq
+    networks:
+      - testing_net
+    environment:
+      - PARSER_ID=2
+      - RAIN=2
+      - MONTREAL=3
+      - YEAR=5
+      - PYTHONUNBUFFERED=1
+
+
+  parser3:
+    container_name: parser3
+    image: parser:latest
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - rabbitmq
+    networks:
+      - testing_net
+    environment:
+      - PARSER_ID=3
+      - RAIN=2
+      - MONTREAL=3
+      - YEAR=5
+      - PYTHONUNBUFFERED=1
+
+
+  rainfilter1:
+    container_name: rainfilter1
+    image: rainfilter:latest
     restart: on-failure
     depends_on:
       rabbitmq:
@@ -76,11 +120,12 @@ services:
     environment:
       - FILTER_ID=1
       - PYTHONUNBUFFERED=1
+      - PARSERS=3
 
 
-  filter2:
-    container_name: filter2
-    image: filter:latest
+  rainfilter2:
+    container_name: rainfilter2
+    image: rainfilter:latest
     restart: on-failure
     depends_on:
       rabbitmq:
@@ -92,11 +137,46 @@ services:
     environment:
       - FILTER_ID=2
       - PYTHONUNBUFFERED=1
+      - PARSERS=3
 
 
-  filter3:
-    container_name: filter3
-    image: filter:latest
+  montrealfilter1:
+    container_name: montrealfilter1
+    image: montrealfilter:latest
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - rabbitmq
+    networks:
+      - testing_net
+    environment:
+      - FILTER_ID=1
+      - PARSERS=3
+      - PYTHONUNBUFFERED=1
+
+
+  montrealfilter2:
+    container_name: montrealfilter2
+    image: montrealfilter:latest
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - rabbitmq
+    networks:
+      - testing_net
+    environment:
+      - FILTER_ID=2
+      - PARSERS=3
+      - PYTHONUNBUFFERED=1
+
+
+  montrealfilter3:
+    container_name: montrealfilter3
+    image: montrealfilter:latest
     restart: on-failure
     depends_on:
       rabbitmq:
@@ -107,12 +187,64 @@ services:
       - testing_net
     environment:
       - FILTER_ID=3
+      - PARSERS=3
       - PYTHONUNBUFFERED=1
 
 
-  filter4:
-    container_name: filter4
-    image: filter:latest
+  yearfilter1:
+    container_name: yearfilter1
+    image: yearfilter:latest
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - rabbitmq
+    networks:
+      - testing_net
+    environment:
+      - FILTER_ID=1
+      - PARSERS=3
+      - PYTHONUNBUFFERED=1
+
+
+  yearfilter2:
+    container_name: yearfilter2
+    image: yearfilter:latest
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - rabbitmq
+    networks:
+      - testing_net
+    environment:
+      - FILTER_ID=2
+      - PARSERS=3
+      - PYTHONUNBUFFERED=1
+
+
+  yearfilter3:
+    container_name: yearfilter3
+    image: yearfilter:latest
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - rabbitmq
+    networks:
+      - testing_net
+    environment:
+      - FILTER_ID=3
+      - PARSERS=3
+      - PYTHONUNBUFFERED=1
+
+
+  yearfilter4:
+    container_name: yearfilter4
+    image: yearfilter:latest
     restart: on-failure
     depends_on:
       rabbitmq:
@@ -123,12 +255,13 @@ services:
       - testing_net
     environment:
       - FILTER_ID=4
+      - PARSERS=3
       - PYTHONUNBUFFERED=1
 
 
-  filter5:
-    container_name: filter5
-    image: filter:latest
+  yearfilter5:
+    container_name: yearfilter5
+    image: yearfilter:latest
     restart: on-failure
     depends_on:
       rabbitmq:
@@ -139,6 +272,55 @@ services:
       - testing_net
     environment:
       - FILTER_ID=5
+      - PARSERS=3
+      - PYTHONUNBUFFERED=1
+
+
+  rainjoiner:
+    container_name: rainjoiner
+    image: rainjoiner:latest
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - rabbitmq
+    networks:
+      - testing_net
+    environment:
+      - FILTER=2
+      - PYTHONUNBUFFERED=1
+
+
+  yearjoiner:
+    container_name: yearjoiner
+    image: yearjoiner:latest
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - rabbitmq
+    networks:
+      - testing_net
+    environment:
+      - FILTER=5
+      - PYTHONUNBUFFERED=1
+
+
+  montrealjoiner:
+    container_name: montrealjoiner
+    image: montrealjoiner:latest
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - rabbitmq
+    networks:
+      - testing_net
+    environment:
+      - FILTER=3
       - PYTHONUNBUFFERED=1
 
 

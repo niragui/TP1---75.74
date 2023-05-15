@@ -3,9 +3,10 @@ from station import Station
 
 RAINY_DAY_PRECIPITATION = 30
 
+TIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
 class Trip():
-    def __init__(self, start_station: Station, end_station: Station,
+    def __init__(self, start_station: str, end_station: str,
                  start_time: datetime, end_time: datetime, city: str):
         self.start = start_station
         self.finish = end_station
@@ -13,8 +14,10 @@ class Trip():
         self.end = end_time
         self.city = city
 
-    def distance(self):
-        return self.start.get_distance_to(self.finish)
+    def distance(self, stations):
+        start = stations.get(self.get_station_start())
+        end = stations.get(self.get_station_end())
+        return start.get_distance_to(end)
 
     def time(self):
         return self.end - self.begin
@@ -37,7 +40,7 @@ class Trip():
         return date(year, month, day)
 
     def get_station_end(self):
-        return self.finish.get_id()
+        return f"{self.city}-{self.finish}"
 
     def get_station_start(self):
-        return self.start.get_id()
+        return f"{self.city}-{self.start}"

@@ -32,20 +32,6 @@ services:
     volumes:
       - ./Server/Server/config.ini:/config.ini
 
-  joiner:
-    container_name: joiner
-    image: joiner:latest
-    restart: on-failure
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-    links: 
-      - rabbitmq
-    networks:
-      - testing_net
-    environment:
-      - PYTHONUNBUFFERED=1
-    
   client:
     container_name: client
     image: client:latest
@@ -61,3 +47,4 @@ services:
       - ./montreal:/montreal
       - ./toronto:/toronto
       - ./washington:/washington
+    

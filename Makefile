@@ -8,9 +8,14 @@ default: build
 all:
 
 docker-image-server:
-	docker build -f ./Server/Filters/Dockerfile -t "filter:latest" .
-	docker build -f ./Server/Joiner/Dockerfile -t "joiner:latest" .
 	docker build -f ./Server/Server/Dockerfile -t "server:latest" .
+	docker build -f ./Server/Parser/Dockerfile -t "parser:latest" .
+	docker build -f ./Server/RainFilter/Dockerfile -t "rainfilter:latest" .
+	docker build -f ./Server/YearFilter/Dockerfile -t "yearfilter:latest" .
+	docker build -f ./Server/MontrealFilter/Dockerfile -t "motrealfilter:latest" .
+	docker build -f ./Server/RainJoiner/Dockerfile -t "rainjoiner:latest" .
+	docker build -f ./Server/YearJoiner/Dockerfile -t "yearjoiner:latest" .
+	docker build -f ./Server/MontrealJoiner/Dockerfile -t "montrealjoiner:latest" .
 .PHONY: docker-image-server
 
 docker-image-client:
