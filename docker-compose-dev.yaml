@@ -62,47 +62,9 @@ services:
       - testing_net
     environment:
       - PARSER_ID=1
-      - RAIN=2
-      - MONTREAL=3
-      - YEAR=5
-      - PYTHONUNBUFFERED=1
-
-
-  parser2:
-    container_name: parser2
-    image: parser:latest
-    restart: on-failure
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-    links:
-      - rabbitmq
-    networks:
-      - testing_net
-    environment:
-      - PARSER_ID=2
-      - RAIN=2
-      - MONTREAL=3
-      - YEAR=5
-      - PYTHONUNBUFFERED=1
-
-
-  parser3:
-    container_name: parser3
-    image: parser:latest
-    restart: on-failure
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-    links:
-      - rabbitmq
-    networks:
-      - testing_net
-    environment:
-      - PARSER_ID=3
-      - RAIN=2
-      - MONTREAL=3
-      - YEAR=5
+      - RAIN=1
+      - MONTREAL=1
+      - YEAR=1
       - PYTHONUNBUFFERED=1
 
 
@@ -120,24 +82,7 @@ services:
     environment:
       - FILTER_ID=1
       - PYTHONUNBUFFERED=1
-      - PARSERS=3
-
-
-  rainfilter2:
-    container_name: rainfilter2
-    image: rainfilter:latest
-    restart: on-failure
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-    links:
-      - rabbitmq
-    networks:
-      - testing_net
-    environment:
-      - FILTER_ID=2
-      - PYTHONUNBUFFERED=1
-      - PARSERS=3
+      - PARSERS=1
 
 
   montrealfilter1:
@@ -153,41 +98,7 @@ services:
       - testing_net
     environment:
       - FILTER_ID=1
-      - PARSERS=3
-      - PYTHONUNBUFFERED=1
-
-
-  montrealfilter2:
-    container_name: montrealfilter2
-    image: montrealfilter:latest
-    restart: on-failure
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-    links:
-      - rabbitmq
-    networks:
-      - testing_net
-    environment:
-      - FILTER_ID=2
-      - PARSERS=3
-      - PYTHONUNBUFFERED=1
-
-
-  montrealfilter3:
-    container_name: montrealfilter3
-    image: montrealfilter:latest
-    restart: on-failure
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-    links:
-      - rabbitmq
-    networks:
-      - testing_net
-    environment:
-      - FILTER_ID=3
-      - PARSERS=3
+      - PARSERS=1
       - PYTHONUNBUFFERED=1
 
 
@@ -204,75 +115,7 @@ services:
       - testing_net
     environment:
       - FILTER_ID=1
-      - PARSERS=3
-      - PYTHONUNBUFFERED=1
-
-
-  yearfilter2:
-    container_name: yearfilter2
-    image: yearfilter:latest
-    restart: on-failure
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-    links:
-      - rabbitmq
-    networks:
-      - testing_net
-    environment:
-      - FILTER_ID=2
-      - PARSERS=3
-      - PYTHONUNBUFFERED=1
-
-
-  yearfilter3:
-    container_name: yearfilter3
-    image: yearfilter:latest
-    restart: on-failure
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-    links:
-      - rabbitmq
-    networks:
-      - testing_net
-    environment:
-      - FILTER_ID=3
-      - PARSERS=3
-      - PYTHONUNBUFFERED=1
-
-
-  yearfilter4:
-    container_name: yearfilter4
-    image: yearfilter:latest
-    restart: on-failure
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-    links:
-      - rabbitmq
-    networks:
-      - testing_net
-    environment:
-      - FILTER_ID=4
-      - PARSERS=3
-      - PYTHONUNBUFFERED=1
-
-
-  yearfilter5:
-    container_name: yearfilter5
-    image: yearfilter:latest
-    restart: on-failure
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-    links:
-      - rabbitmq
-    networks:
-      - testing_net
-    environment:
-      - FILTER_ID=5
-      - PARSERS=3
+      - PARSERS=1
       - PYTHONUNBUFFERED=1
 
 
@@ -288,7 +131,7 @@ services:
     networks:
       - testing_net
     environment:
-      - FILTER=2
+      - FILTER=1
       - PYTHONUNBUFFERED=1
 
 
@@ -304,7 +147,7 @@ services:
     networks:
       - testing_net
     environment:
-      - FILTER=5
+      - FILTER=1
       - PYTHONUNBUFFERED=1
 
 
@@ -320,7 +163,7 @@ services:
     networks:
       - testing_net
     environment:
-      - FILTER=3
+      - FILTER=1
       - PYTHONUNBUFFERED=1
 
 
