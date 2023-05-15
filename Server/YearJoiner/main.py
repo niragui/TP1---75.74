@@ -3,7 +3,7 @@ import time
 import os
 import json
 
-from montreal_joiner_worker import Montreal_JoinerWorker
+from year_joiner_worker import YearJoinerWorker
 
 READ_QUEUE = "joiner_queue"
 WRITE_QUEUE = "server_queue"
@@ -19,7 +19,7 @@ channel = connection.channel()
 
 channel.queue_declare(queue=READ_QUEUE, durable=True)
 
-worker = Montreal_JoinerWorker(filters)
+worker = YearJoinerWorker(filters)
 
 
 def callback(ch, method, properties, body):
