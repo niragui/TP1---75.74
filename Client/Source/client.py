@@ -78,6 +78,7 @@ class Client():
 
     def print_queries(self):
         queries_read = 0
+        print("Waiting For Querys")
         while queries_read < TOTAL_QUERIES:
             query = read_query(self.socket)
             queries_read += 1

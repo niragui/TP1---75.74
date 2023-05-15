@@ -43,8 +43,10 @@ class Server:
 
     def wait_query(self, client_socket):
         self.querys_sent = 0
+        print("Waiting For Querys")
         def read_query(ch, method, properties, body):
             self.query = body.decode(ENCODING)
+            print(f"Query Received {self.query}")
             self.send_query(client_socket)
             self.querys_sent += 1
             print(f"Querys Received: {self.querys_sent}")
