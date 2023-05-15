@@ -33,7 +33,7 @@ class Message():
             for element in elements:
                 self.content.append(self.make_dic(element))
 
-    def decide_type(elements):
+    def decide_type(self, elements):
         if isinstance(elements, int) and elements == STOP_TYPE:
             return STOP_TYPE
         elif isinstance(elements, int) and elements == FIRST_TRIP:
