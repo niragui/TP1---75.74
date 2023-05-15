@@ -24,6 +24,7 @@ worker = MontrealJoinerWorker(filters)
 
 def callback(ch, method, properties, body):
     worker.add_trip(body)
+    ch.basic_ack(delivery_tag=method.delivery_tag)
 
     if worker.has_finished():
         print(f"Montreal Joiner Has Finsihed Its Work")
@@ -31,7 +32,6 @@ def callback(ch, method, properties, body):
         print(f"Montreal Joiner Has Sent The Query")
         channel.stop_consuming()
 
-    ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
 channel.basic_qos(prefetch_count=1)

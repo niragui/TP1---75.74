@@ -25,12 +25,12 @@ parser = Parser(rains, montreals, years)
 
 def callback_data(ch, method, properties, body):
     value = parser.add_data(body)
+    ch.basic_ack(delivery_tag=method.delivery_tag)
 
     if value is STOP_TYPE:
         print(f"{consumer_id} Has Finsihed Its Work")
         channel.stop_consuming()
 
-    ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
 channel.basic_qos(prefetch_count=1)

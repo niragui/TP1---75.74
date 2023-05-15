@@ -1,5 +1,6 @@
 import socket
 import os
+import time
 
 from serverclientprotocol import TRIP_CLIENT_TYPE, STATION_CLIENT_TYPE, WEATHER_CLIENT_TYPE, CITY_CLIENT_TYPE, QUERY_CLIENT_TYPE
 from serverclientprotocol import ClientMessage, send_query, read_query
@@ -16,6 +17,15 @@ FILES.update({TRIP_CLIENT_TYPE: "trips.csv"})
 FILES.update({WEATHER_CLIENT_TYPE: "weather.csv"})
 
 
+def count_time(start_time, end_time):
+    seconds = round(end_time-start_time, 2)
+    minutes = seconds//60
+    seconds = round(seconds % 60, 2)
+    hours = minutes//60
+    minutes = round(minutes % 60, 2)
+    return f"{hours}:{minutes}:{seconds}"
+
+
 class Client():
     def __init__(self, server_ip, port) -> None:
         self.server_ip = server_ip
@@ -24,6 +34,7 @@ class Client():
         self.query = None
 
     def run(self):
+        start = time.time()
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.connect((self.server_ip, self.port))
         self.send_values(STATION_CLIENT_TYPE)
@@ -32,6 +43,10 @@ class Client():
         self.ask_reply()
         self.print_queries()
         self.socket.close()
+        end = time.time()
+        time_elapsed = count_time(start, end)
+        print(f"Time Taken: {time_elapsed}")
+
 
     def get_file(self, city, data_type):
         directory = city.lower()
