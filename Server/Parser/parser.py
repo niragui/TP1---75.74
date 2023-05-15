@@ -34,6 +34,7 @@ class Parser():
 
     def process_trip(self, trips):
         if not self.first_trip_sent:
+            print("First Trip Announcement Sent")
             message = Message(FIRST_TRIP)
             bytes_message = message.create_message()
             self.channel.basic_publish(exchange=STATIONS_EXCHANGE, routing_key='', body=bytes_message,properties=pika.BasicProperties(delivery_mode=2))
@@ -74,7 +75,6 @@ class Parser():
             self.process_trip(entity_to_process)
             return None
         elif ent_type == STATION_TYPE:
-            print("Station Received")
             self.process_station(entity_to_process)
             return None
         elif ent_type == WEATHER_TYPE:

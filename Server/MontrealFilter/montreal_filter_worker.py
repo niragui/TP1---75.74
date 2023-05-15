@@ -54,6 +54,7 @@ class MontrealFilterWorker():
             self.stations.update({station_id: station})
 
     def received_trip(self):
+        print(f"{self.trips_start_received} vs {self.parsers}")
         return self.trips_start_received >= self.parsers
 
     def received_stop(self):
