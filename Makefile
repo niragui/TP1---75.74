@@ -12,7 +12,7 @@ docker-image-server:
 	docker build -f ./Server/Parser/Dockerfile -t "parser:latest" .
 	docker build -f ./Server/RainFilter/Dockerfile -t "rainfilter:latest" .
 	docker build -f ./Server/YearFilter/Dockerfile -t "yearfilter:latest" .
-	docker build -f ./Server/MontrealFilter/Dockerfile -t "motrealfilter:latest" .
+	docker build -f ./Server/MontrealFilter/Dockerfile -t "montrealfilter:latest" .
 	docker build -f ./Server/RainJoiner/Dockerfile -t "rainjoiner:latest" .
 	docker build -f ./Server/YearJoiner/Dockerfile -t "yearjoiner:latest" .
 	docker build -f ./Server/MontrealJoiner/Dockerfile -t "montrealjoiner:latest" .
@@ -25,7 +25,7 @@ docker-image-client:
 docker-compose-up:
 	make docker-image-server
 	make docker-image-client
-	docker compose -f docker-compose-dev.yaml up -d --build
+	docker compose -f docker-compose-dev.yaml up -d --build --remove-orphans
 .PHONY: docker-compose-up
 
 docker-compose-down:
