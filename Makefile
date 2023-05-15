@@ -24,7 +24,7 @@ docker-image-client:
 
 docker-compose-server-up:
 	make docker-image-server
-	docker compose -f server-docker-compose-dev.yaml up -d --build --remove-orphans
+	docker compose -f server-docker-compose-dev.yaml up -d --build
 .PHONY: docker-compose-server-up
 
 docker-compose-server-down:
@@ -38,7 +38,7 @@ docker-compose-server-logs:
 
 docker-compose-client-up:
 	make docker-image-client
-	docker compose -f client-docker-compose-dev.yaml up -d --build --remove-orphans
+	docker compose -f client-docker-compose-dev.yaml up -d --build
 .PHONY: docker-compose-client-up
 
 docker-compose-client-down:
