@@ -22,9 +22,9 @@ class YearJoinerWorker():
         self.time_ask = None
         self.names = {}
 
-        self.channel = self.connection.channel()
         self.connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='rabbitmq'))
+        self.channel = self.connection.channel()
 
     def add_trip(self, body):
         data_type, data = read_message(body)

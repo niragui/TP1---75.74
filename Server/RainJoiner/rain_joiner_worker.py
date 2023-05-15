@@ -20,9 +20,9 @@ class RainJoinerWorker():
         self.ends_found = 0
         self.time_ask = None
 
-        self.channel = self.connection.channel()
         self.connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='rabbitmq'))
+        self.channel = self.connection.channel()
 
     def add_trip(self, body):
         data_type, data = read_message(body)

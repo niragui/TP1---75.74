@@ -22,9 +22,9 @@ class YearFilterWorker():
         self.stops_received = 0
         self.parsers = parsers
 
-        self.channel = self.connection.channel()
         self.connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='rabbitmq'))
+        self.channel = self.connection.channel()
 
     def send_value(self, value):
         message = JoinerMessage(value)

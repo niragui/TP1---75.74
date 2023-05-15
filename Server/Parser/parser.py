@@ -1,7 +1,7 @@
 import pika
 
 from serverparserprotocol import read_message, TRIP_TYPE, STATION_TYPE, WEATHER_TYPE
-from parsersfilterprotocol import FIRST_TRIP, Message
+from parserfilterprotocol import FIRST_TRIP, Message
 from constants import STOP_TYPE
 from trip import Trip
 from weather import Weather
@@ -25,9 +25,9 @@ class Parser():
         self.montreal_filters = montreals
         self.year_filters = years
         self.first_trip_sent = False
-        self.channel = self.connection.channel()
         self.connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='rabbitmq'))
+        self.channel = self.connection.channel()
 
         self.channel.exchange_declare(exchange=STATIONS_EXCHANGE, exchange_type='fanout')
         self.channel.exchange_declare(exchange=WEATHER_EXCHANGE, exchange_type='fanout')
