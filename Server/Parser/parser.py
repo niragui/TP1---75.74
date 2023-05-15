@@ -81,6 +81,7 @@ class Parser():
             self.process_weather(entity_to_process)
             return None
         elif ent_type == STOP_TYPE:
+            self.publish_stops()
             return STOP_TYPE
         else:
             raise Exception(f"Type Received Don't Make Sense {ent_type}")

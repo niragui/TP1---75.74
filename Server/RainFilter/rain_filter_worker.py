@@ -77,6 +77,7 @@ class RainFilterWorker():
         elif ent_type == WEATHER_TYPE:
             self.process_weathers(entity)
         elif ent_type == STOP_TYPE:
+            print("Stop Received")
             self.stops_received += 1
         elif ent_type == FIRST_TRIP:
             self.trips_start_received += 1

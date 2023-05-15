@@ -75,6 +75,7 @@ class MontrealFilterWorker():
         elif ent_type == STATION_TYPE:
             self.process_stations(entity)
         elif ent_type == STOP_TYPE:
+            print("Stop Received")
             self.stops_received += 1
         elif ent_type == FIRST_TRIP:
             self.trips_start_received += 1
