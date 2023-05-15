@@ -74,6 +74,7 @@ class Parser():
             self.process_trip(entity_to_process)
             return None
         elif ent_type == STATION_TYPE:
+            print("Station Received")
             self.process_station(entity_to_process)
             return None
         elif ent_type == WEATHER_TYPE:
