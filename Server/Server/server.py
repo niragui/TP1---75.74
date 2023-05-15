@@ -44,6 +44,7 @@ class Server:
     def wait_query(self, client_socket):
         self.querys_sent = 0
         print("Waiting For Querys")
+
         def read_query(ch, method, properties, body):
             self.query = body.decode(ENCODING)
             print(f"Query Received {self.query}")
@@ -52,9 +53,11 @@ class Server:
             print(f"Querys Received: {self.querys_sent}")
             if self.querys_sent >= 3:
                 self.channel.stop_consuming()
-        
+
         self.channel.basic_qos(prefetch_count=1)
         self.channel.basic_consume(queue=SERVER_QUEUE, on_message_callback=read_query)
+
+        self.channel.start_consuming()
 
     def publish_trip(self, lines):
         message = Message(TRIP_TYPE, lines, self.city)
