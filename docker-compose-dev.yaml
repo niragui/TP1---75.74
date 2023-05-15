@@ -32,23 +32,6 @@ services:
     volumes:
       - ./Server/Server/config.ini:/config.ini
 
-  client:
-    container_name: client
-    image: client:latest
-    environment:
-      - PYTHONUNBUFFERED=1
-    networks:
-      - testing_net
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-    volumes:
-      - ./Client/config.ini:/config.ini
-      - ./montreal:/montreal
-      - ./toronto:/toronto
-      - ./washington:/washington
-    
-
   parser1:
     container_name: parser1
     image: parser:latest

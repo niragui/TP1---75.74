@@ -7,6 +7,8 @@ from serverclientprotocol import ClientMessage, send_query, read_query
 ENCODING = "utf-8"
 BATCH_AMOUNT = 10
 
+TOTAL_QUERIES = 3
+
 CITIES = ["Montreal", "Toronto", "Washington"]
 FILES = {}
 FILES.update({STATION_CLIENT_TYPE: "stations.csv"})
@@ -28,7 +30,8 @@ class Client():
         self.send_values(WEATHER_CLIENT_TYPE)
         self.send_values(TRIP_CLIENT_TYPE)
         self.ask_reply()
-        self.print_query()
+        self.print_queries()
+        self.socket.close()
 
     def get_file(self, city, data_type):
         directory = city.lower()
@@ -72,18 +75,14 @@ class Client():
 
     def ask_reply(self):
         send_query(self.socket)
-        self.query = read_query(self.socket)
 
-    def print_query(self):
-        query_one = self.query.get(1)
-        print(f"Average On Rainy Days: {query_one}")
+    def print_queries(self):
+        queries_read = 0
+        while queries_read < TOTAL_QUERIES:
+            query = read_query(self.socket)
+            queries_read += 1
+            print(query)
 
-        query_two = self.query.get(2)
-        print("Stations that duplicated their trips in 2017:")
-        for station in query_two:
-            print(f"\t{station}")
-
-        query_three = self.query.get(3)
-        print("Montreal Stations that have an above 6km average to reach:")
-        for station in query_three:
-            print(f"\t{station}")
+    def __del__(self):
+        if self.socket:
+            self.socket.close()

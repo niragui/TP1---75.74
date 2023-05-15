@@ -22,17 +22,30 @@ docker-image-client:
 	docker build -f ./Client/Source/Dockerfile -t "client:latest" .
 .PHONY: docker-image-client
 
-docker-compose-up:
+docker-compose-server-up:
 	make docker-image-server
+	docker compose -f server-docker-compose-dev.yaml up -d --build --remove-orphans
+.PHONY: docker-compose-server-up
+
+docker-compose-server-down:
+	docker compose -f server-docker-compose-dev.yaml stop -t 1
+	docker compose -f server-docker-compose-dev.yaml down
+.PHONY: docker-compose-server-down
+
+docker-compose-server-logs:
+	docker compose -f server-docker-compose-dev.yaml logs -f
+.PHONY: docker-compose-server-logs
+
+docker-compose-client-up:
 	make docker-image-client
-	docker compose -f docker-compose-dev.yaml up -d --build --remove-orphans
-.PHONY: docker-compose-up
+	docker compose -f client-docker-compose-dev.yaml up -d --build --remove-orphans
+.PHONY: docker-compose-client-up
 
-docker-compose-down:
-	docker compose -f docker-compose-dev.yaml stop -t 1
-	docker compose -f docker-compose-dev.yaml down
-.PHONY: docker-compose-down
+docker-compose-client-down:
+	docker compose -f client-docker-compose-dev.yaml stop -t 1
+	docker compose -f client-docker-compose-dev.yaml down
+.PHONY: docker-compose-client-down
 
-docker-compose-logs:
-	docker compose -f docker-compose-dev.yaml logs -f
-.PHONY: docker-compose-logs
+docker-compose-client-logs:
+	docker compose -f client-docker-compose-dev.yaml logs -f
+.PHONY: docker-compose-client-logs

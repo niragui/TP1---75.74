@@ -1,4 +1,4 @@
-DOCKER_FILE = "docker-compose-dev.yaml"
+DOCKER_FILE = "server-docker-compose-dev.yaml"
 HEADER = "header.txt"
 FOOTER = "footer.txt"
 
