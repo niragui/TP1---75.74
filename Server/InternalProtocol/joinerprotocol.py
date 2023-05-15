@@ -14,17 +14,15 @@ class JoinerMessage():
         self.data = data
 
     def get_type(self, data):
-        bytes = b""
-        type_byted = int_to_bytes(self.type)
-        bytes += type_byted
         if isinstance(data, int):
             return STOP_TYPE
         else:
             return JOIN_TYPE
 
-
     def create_message(self):
         bytes = b""
+        type_byted = int_to_bytes(self.type)
+        bytes += type_byted
 
         string_json = json.dumps(self.data).encode(ENCODING)
 
