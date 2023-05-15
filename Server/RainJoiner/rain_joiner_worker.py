@@ -44,7 +44,7 @@ class RainJoinerWorker():
 
         return ends_found or elapsed_time >= TEN_MINUTES
 
-    def send_values(self):
+    def get_values(self):
         value = self.joiner.get_value()
 
         return {1: value}
