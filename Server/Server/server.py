@@ -46,6 +46,7 @@ class Server:
         print("Waiting For Querys")
 
         def read_query(ch, method, properties, body):
+            ch.basic_ack(delivery_tag=method.delivery_tag)
             self.query = body.decode(ENCODING)
             print(f"Query Received {self.query}")
             self.send_query(client_socket)
