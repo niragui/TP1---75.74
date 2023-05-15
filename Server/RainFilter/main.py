@@ -40,6 +40,7 @@ def callback_trips(ch, method, properties, body):
     worker.add_data(body)
 
     if worker.received_stop():
+        print(f"{consumer_id} Has Finsihed Its Work")
         worker.notify_stop()
         channel.stop_consuming()
 

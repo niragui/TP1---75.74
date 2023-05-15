@@ -26,6 +26,7 @@ def callback(ch, method, properties, body):
     worker.add_trip(body)
 
     if worker.has_finished():
+        print(f"Year Joiner Has Finsihed Its Work")
         worker.send_query()
         channel.stop_consuming()
 
