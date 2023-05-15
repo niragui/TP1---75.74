@@ -34,7 +34,7 @@ class AverageDictJoiner():
             return
 
         prev_total = average * amount
-        new_total = prev_total + new_value
+        new_total = prev_total + value
         amount += 1
         average = new_total / amount
 
