@@ -14,7 +14,7 @@ from weather import Weather
 
 
 WRITE_QUEUE = "rain_joiner_queue"
-TRIP_ANNOUNCE = 10000
+TRIP_ANNOUNCE = 1000000
 
 
 class RainFilterWorker():

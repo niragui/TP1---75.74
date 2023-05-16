@@ -13,7 +13,7 @@ from station import Station
 
 
 WRITE_QUEUE = "year_joiner_queue"
-TRIP_ANNOUNCE = 10000
+TRIP_ANNOUNCE = 1000000
 
 
 class YearFilterWorker():

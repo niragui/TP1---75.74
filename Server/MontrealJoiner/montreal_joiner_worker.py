@@ -13,7 +13,7 @@ MIN_QUERY_MONTERAL = 6
 TEN_MINUTES = 60 * 10
 SERVER_QUEUE = "server_queue"
 
-TRIP_ANNOUNCE = 5000
+TRIP_ANNOUNCE = 500000
 
 
 class MontrealJoinerWorker():
