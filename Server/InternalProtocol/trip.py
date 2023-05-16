@@ -38,6 +38,9 @@ class Trip():
 
         return date(year, month, day)
 
+    def get_duration(self):
+        return (self.end-self.begin).total_seconds()
+
     def get_station_end(self):
         return f"{self.city}-{self.finish}"
 

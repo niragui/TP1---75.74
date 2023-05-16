@@ -60,9 +60,12 @@ class YearJoinerWorker():
     def get_parsed_values(self, values):
         aux = []
 
+        print(values)
+
         for station, sum in values.items():
             if sum >= 0:
                 name = self.names.get(station)
+                print(f"{station} [{name}] Added Cause Sum Is: {sum}")
                 aux.append(name)
 
         return aux

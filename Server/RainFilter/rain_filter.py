@@ -21,7 +21,7 @@ class RainFilter():
             return None
 
         if weather.is_rainy(PRECIPITATION_LIMIT):
-            precipitation = weather.get_rain()
-            return (start.isoformat(), precipitation)
+            duration = self.trip.get_duration()
+            return (start.isoformat(), duration)
         else:
             return None
