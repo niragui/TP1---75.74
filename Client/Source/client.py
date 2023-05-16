@@ -1,17 +1,31 @@
 import socket
 import os
+import time
 
 from serverclientprotocol import TRIP_CLIENT_TYPE, STATION_CLIENT_TYPE, WEATHER_CLIENT_TYPE, CITY_CLIENT_TYPE, QUERY_CLIENT_TYPE
 from serverclientprotocol import ClientMessage, send_query, read_query
 
 ENCODING = "utf-8"
-BATCH_AMOUNT = 10
+BATCH_AMOUNT = 500
+
+TOTAL_QUERIES = 3
 
 CITIES = ["Montreal", "Toronto", "Washington"]
 FILES = {}
 FILES.update({STATION_CLIENT_TYPE: "stations.csv"})
 FILES.update({TRIP_CLIENT_TYPE: "trips.csv"})
 FILES.update({WEATHER_CLIENT_TYPE: "weather.csv"})
+
+
+def count_time(start_time, end_time):
+    seconds = round(end_time - start_time, 2)
+    seconds = seconds % (24 * 3600)
+    hour = seconds // 3600
+    seconds %= 3600
+    minutes = seconds // 60
+    seconds %= 60
+
+    return "%d:%02d:%02d" % (hour, minutes, seconds)
 
 
 class Client():
@@ -22,13 +36,23 @@ class Client():
         self.query = None
 
     def run(self):
+        start = time.time()
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.connect((self.server_ip, self.port))
+        print("Client Connected")
         self.send_values(STATION_CLIENT_TYPE)
+        print("Stations Sent")
         self.send_values(WEATHER_CLIENT_TYPE)
+        print("Weathers Sent")
         self.send_values(TRIP_CLIENT_TYPE)
+        print("Trips Sent")
         self.ask_reply()
-        self.print_query()
+        self.print_queries()
+        self.socket.close()
+        end = time.time()
+        time_elapsed = count_time(start, end)
+        print(f"Time Taken: {time_elapsed}")
+
 
     def get_file(self, city, data_type):
         directory = city.lower()
@@ -72,18 +96,15 @@ class Client():
 
     def ask_reply(self):
         send_query(self.socket)
-        self.query = read_query(self.socket)
 
-    def print_query(self):
-        query_one = self.query.get(1)
-        print(f"Average On Rainy Days: {query_one}")
+    def print_queries(self):
+        queries_read = 0
+        print("Waiting For Querys")
+        while queries_read < TOTAL_QUERIES:
+            query = read_query(self.socket)
+            queries_read += 1
+            print(query)
 
-        query_two = self.query.get(2)
-        print("Stations that duplicated their trips in 2017:")
-        for station in query_two:
-            print(f"\t{station}")
-
-        query_three = self.query.get(3)
-        print("Montreal Stations that have an above 6km average to reach:")
-        for station in query_three:
-            print(f"\t{station}")
+    def __del__(self):
+        if self.socket:
+            self.socket.close()

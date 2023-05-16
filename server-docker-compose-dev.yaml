@@ -1,0 +1,160 @@
+version: '3.9'
+services:
+  rabbitmq:
+    build:
+      context: ./Server/rabbitmq
+      dockerfile: rabbitmq.dockerfile
+    ports:
+      - 15672:15672
+    networks:
+      - testing_net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:15672"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    environment:
+      - RABBITMQ_LOGS=-
+  
+  server:
+    container_name: server
+    image: server:latest
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links: 
+      - rabbitmq
+    networks:
+      - testing_net
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./Server/Server/config.ini:/config.ini
+
+  parser1:
+    container_name: parser1
+    image: parser:latest
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - rabbitmq
+    networks:
+      - testing_net
+    environment:
+      - PARSER_ID=1
+      - RAIN=1
+      - MONTREAL=1
+      - YEAR=1
+      - PYTHONUNBUFFERED=1
+
+
+  rainfilter1:
+    container_name: rainfilter1
+    image: rainfilter:latest
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - rabbitmq
+    networks:
+      - testing_net
+    environment:
+      - FILTER_ID=1
+      - PYTHONUNBUFFERED=1
+      - PARSERS=1
+
+
+  montrealfilter1:
+    container_name: montrealfilter1
+    image: montrealfilter:latest
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - rabbitmq
+    networks:
+      - testing_net
+    environment:
+      - FILTER_ID=1
+      - PARSERS=1
+      - PYTHONUNBUFFERED=1
+
+
+  yearfilter1:
+    container_name: yearfilter1
+    image: yearfilter:latest
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - rabbitmq
+    networks:
+      - testing_net
+    environment:
+      - FILTER_ID=1
+      - PARSERS=1
+      - PYTHONUNBUFFERED=1
+
+
+  rainjoiner:
+    container_name: rainjoiner
+    image: rainjoiner:latest
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - rabbitmq
+    networks:
+      - testing_net
+    environment:
+      - FILTER=1
+      - PYTHONUNBUFFERED=1
+
+
+  yearjoiner:
+    container_name: yearjoiner
+    image: yearjoiner:latest
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - rabbitmq
+    networks:
+      - testing_net
+    environment:
+      - FILTER=1
+      - PYTHONUNBUFFERED=1
+
+
+  montrealjoiner:
+    container_name: montrealjoiner
+    image: montrealjoiner:latest
+    restart: on-failure
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    links:
+      - rabbitmq
+    networks:
+      - testing_net
+    environment:
+      - FILTER=1
+      - PYTHONUNBUFFERED=1
+
+
+  
+networks:
+  testing_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.25.125.0/24
+

@@ -1,18 +1,23 @@
 import json
 
 from common import int_to_bytes, int_from_bytes, INT_LENGTH
+from constants import STOP_TYPE
+
 
 ENCODING = "utf-8"
 
-PRECIPITATION_FILTER = 1
-YEAR_FILTER = 2
-MONTREAL_FILTER = 3
-
+JOIN_TYPE = 1
 
 class JoinerMessage():
-    def __init__(self, type, data):
-        self.type = type
+    def __init__(self, data):
+        self.type = self.get_type(data)
         self.data = data
+
+    def get_type(self, data):
+        if isinstance(data, int):
+            return STOP_TYPE
+        else:
+            return JOIN_TYPE
 
     def create_message(self):
         bytes = b""

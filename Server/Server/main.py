@@ -21,6 +21,7 @@ def initialize_config():
     config_params = {}
     try:
         config_params["port"] = int(os.getenv('SERVER_PORT', config["DEFAULT"]["SERVER_PORT"]))
+        config_params["parsers"] = int(os.getenv('PARSERS', config["DEFAULT"]["PARSERS"]))
     except KeyError as e:
         raise KeyError("Key was not found. Error: {} .Aborting server".format(e))
     except ValueError as e:
@@ -32,9 +33,10 @@ def initialize_config():
 def main():
     config_params = initialize_config()
     port = config_params["port"]
+    parsers = config_params["parsers"]
 
     # Initialize server and start server loop
-    server = Server(port)
+    server = Server(port, parsers)
     server.run()
 
 if __name__ == "__main__":

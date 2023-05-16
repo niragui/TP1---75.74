@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-
 from configparser import ConfigParser
+
 import os
 from client import Client
+from time import sleep
 
 
 def initialize_config():
@@ -40,4 +41,5 @@ def main():
 
 
 if __name__ == "__main__":
+    sleep(3)
     main()
