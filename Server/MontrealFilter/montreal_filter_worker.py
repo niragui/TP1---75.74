@@ -20,6 +20,7 @@ class MontrealFilterWorker():
         self.stations = {}
         self.trips_start_received = 0
         self.stops_received = 0
+        self.trips_filtered = 0
         self.parsers = parsers
 
         self.connection = pika.BlockingConnection(
@@ -36,6 +37,11 @@ class MontrealFilterWorker():
 
     def process_trips(self, trips: List[Trip]):
         values = []
+        before = self.trips_filtered
+        self.trips_filtered += len(trips)
+        change = before%1000 - self.trips_filtered%1000
+        if change > 0:
+            print(f"Trips Filtered: {self.trips_filtered}")
 
         for trip in trips:
             filter = MontrealFilter(trip, self.stations)

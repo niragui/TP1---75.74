@@ -22,6 +22,7 @@ class RainFilterWorker():
         self.trips_start_received = 0
         self.stops_received = 0
         self.parsers = parsers
+        self.trips_filetered = 0
 
         self.connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='rabbitmq'))
@@ -36,6 +37,12 @@ class RainFilterWorker():
                                    properties=pika.BasicProperties(delivery_mode=2))
 
     def process_trips(self, trips: List[Trip]):
+        values = []
+        before = self.trips_filtered
+        self.trips_filtered += len(trips)
+        change = before%1000 - self.trips_filtered%1000
+        if change > 0:
+            print(f"Trips Filtered: {self.trips_filtered}")
         values = []
 
         for trip in trips:
