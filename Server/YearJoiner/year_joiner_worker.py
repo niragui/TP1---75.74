@@ -65,6 +65,7 @@ class YearJoinerWorker():
     def cancel_stopper(self):
         if self.stopper:
             self.stopper.cancel()
+            self.stopper = None
 
     def get_parsed_values(self, values):
         aux = []
@@ -93,3 +94,6 @@ class YearJoinerWorker():
                                    routing_key=SERVER_QUEUE,
                                    body=bytes_to_send,
                                    properties=pika.BasicProperties(delivery_mode=2))
+
+    def __del__(self):
+        self.cancel_stopper()
