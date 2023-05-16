@@ -18,6 +18,7 @@ FILES.update({WEATHER_CLIENT_TYPE: "weather.csv"})
 
 
 def count_time(start_time, end_time):
+    seconds = round(end_time - start_time, 2)
     seconds = seconds % (24 * 3600)
     hour = seconds // 3600
     seconds %= 3600
