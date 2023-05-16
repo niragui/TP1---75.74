@@ -22,7 +22,7 @@ class RainFilterWorker():
         self.trips_start_received = 0
         self.stops_received = 0
         self.parsers = parsers
-        self.trips_filetered = 0
+        self.trips_filtered = 0
 
         self.connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='rabbitmq'))
