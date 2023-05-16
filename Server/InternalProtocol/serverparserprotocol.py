@@ -73,6 +73,7 @@ def parse_stations(data, city):
     for data_station in data:
         code = data_station[0]
         name = data_station[1]
+        code += name
         if len(data_station[2]) == 0:
             latitude = 0
         else:

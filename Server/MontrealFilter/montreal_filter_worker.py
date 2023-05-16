@@ -41,7 +41,7 @@ class MontrealFilterWorker():
         values = []
         before = self.trips_filtered
         self.trips_filtered += len(trips)
-        change = before%TRIP_ANNOUNCE - self.trips_filtered%TRIP_ANNOUNCE
+        change = before % TRIP_ANNOUNCE - self.trips_filtered % TRIP_ANNOUNCE
         if change > 0:
             print(f"Trips Filtered: {self.trips_filtered}")
 

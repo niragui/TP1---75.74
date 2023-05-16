@@ -9,7 +9,7 @@ from joinerprotocol import read_message
 from constants import STOP_TYPE
 from joinerserverprotocol import ENCODING
 
-MIN_QUERY_MONTERAL = 6
+MIN_QUERY_MONTERAL = 6.0
 TEN_MINUTES = 60 * 10
 SERVER_QUEUE = "server_queue"
 
@@ -39,9 +39,10 @@ class MontrealJoinerWorker():
         else:
             before = self.trips_joined
             self.trips_joined += len(data)
-            change = before%TRIP_ANNOUNCE - self.trips_joined%TRIP_ANNOUNCE
+            change = before % TRIP_ANNOUNCE - self.trips_joined % TRIP_ANNOUNCE
             if change > 0:
                 print(f"Trips Joined: {self.trips_joined}")
+
             for value in data:
                 code = value[0]
                 name = value[1]

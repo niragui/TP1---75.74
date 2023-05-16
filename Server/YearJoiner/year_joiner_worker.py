@@ -39,9 +39,10 @@ class YearJoinerWorker():
         else:
             before = self.trips_joined
             self.trips_joined += len(data)
-            change = before%TRIP_ANNOUNCE - self.trips_joined%TRIP_ANNOUNCE
+            change = before % TRIP_ANNOUNCE - self.trips_joined % TRIP_ANNOUNCE
             if change > 0:
                 print(f"Trips Joined: {self.trips_joined}")
+
             for value in data:
                 code = value[0]
                 name = value[1]

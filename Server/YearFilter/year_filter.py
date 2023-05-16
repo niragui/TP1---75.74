@@ -16,6 +16,7 @@ class YearFilter():
     def run(self):
         date = self.trip.get_day_start()
         year = date.year
+
         if year not in SEARCHED_YEARS:
             return None
 
