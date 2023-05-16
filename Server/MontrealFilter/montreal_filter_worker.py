@@ -58,12 +58,13 @@ class MontrealFilterWorker():
 
     def process_stop(self, sender, bytes_read):
         if sender in self.stops_received:
+            print(f"Stop From {sender} Already Received")
             self.channel.basic_publish(exchange='',
                                        routing_key=self.trips_queue,
                                        body=bytes_read,
                                        properties=pika.BasicProperties(delivery_mode=2))
         else:
-            print("Stop Received")
+            print(f"Received Stop From {sender}")
             self.stops_received.append(sender)
 
     def process_stations(self, stations: List[Station]):
