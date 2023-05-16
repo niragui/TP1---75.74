@@ -32,6 +32,7 @@ class Server:
 
     def run(self):
         client_socket, _ = self._server_socket.accept()
+        print("Client Accepted")
         self.__handle_client_connection(client_socket)
         self.publish_stops()
 
@@ -102,6 +103,7 @@ class Server:
                 self.mode = QUERY_CLIENT_TYPE
                 break
             elif info_type == CITY_CLIENT_TYPE:
+                print(f"Server Registro Ciudad: {info}")
                 self.city = info
             elif info_type == TRIP_CLIENT_TYPE:
                 self.publish_trip(info)
