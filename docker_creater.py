@@ -137,7 +137,7 @@ def main():
 
     f = open(DOCKER_FILE, "w")
     add_section(HEADER, f)
-    add_server(file, parsers)
+    add_server(f, parsers)
     add_parsers(parsers, f_rain, f_montreal, f_year, f)
     add_rain_filters(f_rain, parsers, f)
     add_montreal_filters(f_montreal, parsers, f)
