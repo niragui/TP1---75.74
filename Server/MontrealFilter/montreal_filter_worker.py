@@ -17,12 +17,13 @@ TRIP_ANNOUNCE = 10000
 
 
 class MontrealFilterWorker():
-    def __init__(self, parsers):
+    def __init__(self, parsers, queue):
         self.stations = {}
         self.trips_start_received = 0
-        self.stops_received = 0
+        self.stops_received = []
         self.trips_filtered = 0
         self.parsers = parsers
+        self.trips_queue = queue
 
         self.connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='rabbitmq'))
@@ -55,6 +56,16 @@ class MontrealFilterWorker():
 
         return value
 
+    def process_stop(self, sender, bytes_read):
+        if sender in self.stops_received:
+            self.channel.basic_publish(exchange='',
+                                       routing_key=self.trips_queue,
+                                       body=bytes_read,
+                                       properties=pika.BasicProperties(delivery_mode=2))
+        else:
+            print("Stop Received")
+            self.stops_received.append(sender)
+
     def process_stations(self, stations: List[Station]):
         for station in stations:
             station_id = station.get_id()
@@ -64,7 +75,7 @@ class MontrealFilterWorker():
         return self.trips_start_received >= self.parsers
 
     def received_stop(self):
-        return self.stops_received >= self.parsers
+        return len(self.stops_received) >= self.parsers
 
     def notify_stop(self):
         message = JoinerMessage(STOP_TYPE)
@@ -82,8 +93,7 @@ class MontrealFilterWorker():
         elif ent_type == STATION_TYPE:
             self.process_stations(entity)
         elif ent_type == STOP_TYPE:
-            print("Stop Received")
-            self.stops_received += 1
+            self.process_stop(entity, body_read)
         elif ent_type == FIRST_TRIP:
             self.trips_start_received += 1
         else:

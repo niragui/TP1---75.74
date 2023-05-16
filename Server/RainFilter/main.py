@@ -24,7 +24,7 @@ channel.queue_bind(READ_DATA_QUEUE, WEATHERS_EXCHANGE)
 
 channel.queue_declare(queue=READ_TRIPS_QUEUE, durable=True)
 
-worker = RainFilterWorker(parsers)
+worker = RainFilterWorker(parsers, READ_TRIPS_QUEUE)
 
 
 def callback_data(ch, method, properties, body):

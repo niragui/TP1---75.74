@@ -26,18 +26,20 @@ DATE_FORMAT = "%Y-%m-%d"
 
 
 class Message():
-    def __init__(self, elements):
+    def __init__(self, elements, id):
         self.type = self.decide_type(elements)
         self.content = []
-        if isinstance(elements, list):
+        if self.type == STOP_TYPE or self.type == FIRST_TRIP:
+            self.content = id
+        elif self.type != FIRST_TRIP:
             for element in elements:
                 self.content.append(self.make_dic(element))
 
     def decide_type(self, elements):
-        if isinstance(elements, int) and elements == STOP_TYPE:
-            return STOP_TYPE
-        elif isinstance(elements, int) and elements == FIRST_TRIP:
+        if isinstance(elements, int) and elements == FIRST_TRIP:
             return FIRST_TRIP
+        elif isinstance(elements, int) and elements == STOP_TYPE:
+            return STOP_TYPE
         else:
             element = elements[0]
             if isinstance(element, Trip):
