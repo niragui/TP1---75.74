@@ -7,7 +7,7 @@ def get_number(text):
         except:
             numero = input(text+" PLEASE INSERT A NUMBER ").replace(".", "").replace(",", "")
 
-lines = get_number("How Many Likes You'd Like To Save?")
+lines = get_number("How Many Likes You'd Like To Save? (0 For ALL)")
 city = input("What City?")
 
 read_file = f"{city.lower()}/trips_real.csv"
@@ -21,7 +21,7 @@ lines_written = 0
 for line in f:
     f_write.write(line)
     lines_written += 1
-    if lines_written >= lines:
+    if lines_written >= lines and lines > 0:
         break
 
 f.close()
