@@ -15,19 +15,3 @@ services:
       retries: 10
     environment:
       - RABBITMQ_LOGS=-
-  
-  server:
-    container_name: server
-    image: server:latest
-    restart: on-failure
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
-    links: 
-      - rabbitmq
-    networks:
-      - testing_net
-    environment:
-      - PYTHONUNBUFFERED=1
-    volumes:
-      - ./Server/Server/config.ini:/config.ini
