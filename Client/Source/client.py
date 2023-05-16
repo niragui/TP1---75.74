@@ -85,6 +85,7 @@ class Client():
                 continue
             lines = self.get_lines(file)
             while True:
+                print(f"Sending {lines}")
                 if len(lines) > 0:
                     message = ClientMessage(data_type, lines)
                     message.send_message(self.socket)
