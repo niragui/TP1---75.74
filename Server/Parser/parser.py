@@ -20,7 +20,7 @@ YEAR_FILTERS = 3
 
 
 class Parser():
-    def __init__(self, rains=RAIN_FILTERS, montreals=MONTREAL_FILTERS, years=YEAR_FILTERS):
+    def __init__(self, rains=RAIN_FILTERS, montreals=MONTREAL_FILTERS, years=YEAR_FILTERS, pars_id):
         self.rain_filters = rains
         self.montreal_filters = montreals
         self.year_filters = years
@@ -28,6 +28,7 @@ class Parser():
         self.connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='rabbitmq'))
         self.channel = self.connection.channel()
+        self.id = pars_id
 
         self.channel.exchange_declare(exchange=STATIONS_EXCHANGE, exchange_type='fanout')
         self.channel.exchange_declare(exchange=WEATHER_EXCHANGE, exchange_type='fanout')
@@ -35,13 +36,13 @@ class Parser():
     def process_trip(self, trips):
         if not self.first_trip_sent:
             print("First Trip Announcement Sent")
-            message = Message(FIRST_TRIP)
+            message = Message(FIRST_TRIP, self.id)
             bytes_message = message.create_message()
             self.channel.basic_publish(exchange=STATIONS_EXCHANGE, routing_key='', body=bytes_message,properties=pika.BasicProperties(delivery_mode=2))
             self.channel.basic_publish(exchange=WEATHER_EXCHANGE, routing_key='', body=bytes_message,properties=pika.BasicProperties(delivery_mode=2))
             self.first_trip_sent = True
 
-        message = Message(trips)
+        message = Message(trips, self.id)
         bytes_message = message.create_message()
 
         self.channel.basic_publish(exchange="", routing_key=RAIN_QUEUE, body=bytes_message,properties=pika.BasicProperties(delivery_mode=2))
@@ -49,17 +50,17 @@ class Parser():
         self.channel.basic_publish(exchange="", routing_key=YEAR_QUEUE, body=bytes_message,properties=pika.BasicProperties(delivery_mode=2))
 
     def process_station(self, stations):
-        message = Message(stations)
+        message = Message(stations, self.id)
         bytes_message = message.create_message()
         self.channel.basic_publish(exchange=STATIONS_EXCHANGE, routing_key='', body=bytes_message,properties=pika.BasicProperties(delivery_mode=2))
 
     def process_weather(self, weathers):
-        message = Message(weathers)
+        message = Message(weathers, self.id)
         bytes_message = message.create_message()
         self.channel.basic_publish(exchange=WEATHER_EXCHANGE, routing_key='', body=bytes_message,properties=pika.BasicProperties(delivery_mode=2))
 
     def publish_stops(self):
-        message = Message(STOP_TYPE)
+        message = Message(STOP_TYPE, self.id)
         bytes_message = message.create_message()
         for _ in range(self.rain_filters):
             self.channel.basic_publish(exchange="", routing_key=RAIN_QUEUE, body=bytes_message,properties=pika.BasicProperties(delivery_mode=2))

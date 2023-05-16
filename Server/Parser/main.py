@@ -20,7 +20,7 @@ connection = pika.BlockingConnection(
 channel = connection.channel()
 channel.queue_declare(queue=DATA_QUEUE, durable=True)
 
-parser = Parser(rains, montreals, years)
+parser = Parser(rains, montreals, years, consumer_id)
 
 
 def callback_data(ch, method, properties, body):
