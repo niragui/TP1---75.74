@@ -20,7 +20,7 @@ YEAR_FILTERS = 3
 
 
 class Parser():
-    def __init__(self, rains=RAIN_FILTERS, montreals=MONTREAL_FILTERS, years=YEAR_FILTERS, pars_id):
+    def __init__(self, pars_id, rains=RAIN_FILTERS, montreals=MONTREAL_FILTERS, years=YEAR_FILTERS):
         self.rain_filters = rains
         self.montreal_filters = montreals
         self.year_filters = years
