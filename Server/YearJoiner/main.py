@@ -29,7 +29,7 @@ def callback(ch, method, properties, body):
 
     if worker.received_stop():
         stop_timer = Timer(SYNC_WAIT, channel.start_consuming)
-        worker.start_stop(stop_timer)
+        worker.start_stopper(stop_timer)
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
     if worker.has_finished():
