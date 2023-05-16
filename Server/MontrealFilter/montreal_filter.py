@@ -16,6 +16,8 @@ class MontrealFilter():
             return None
 
         distance = self.trip.distance(self.stations)
+        if distance is None:
+            return None
         station = self.trip.get_station_end()
         station_ent = self.stations.get(station)
         name = station_ent.name

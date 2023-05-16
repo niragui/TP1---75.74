@@ -16,7 +16,14 @@ class Trip():
     def distance(self, stations):
         start = stations.get(self.get_station_start())
         end = stations.get(self.get_station_end())
-        return start.get_distance_to(end)
+        try:
+            return start.get_distance_to(end)
+        except:
+            if start is None:
+                print(f"Station {self.get_station_start()} Wasn't Found")
+            elif end is None:
+                print(f"Station {self.get_station_end()} Wasn't Found")
+            return None
 
     def time(self):
         return self.end - self.begin

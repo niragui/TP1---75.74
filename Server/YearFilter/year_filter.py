@@ -22,6 +22,8 @@ class YearFilter():
 
         station = self.trip.get_station_end()
         station_ent = self.stations.get(station)
+        if station_ent is None:
+            return None
         name = station_ent.name
         if year == 2016:
             return (name, NEGATIVE_VALUE)
