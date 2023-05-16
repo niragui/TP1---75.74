@@ -22,23 +22,22 @@ channel = connection.channel()
 channel.queue_declare(queue=READ_QUEUE, durable=True)
 
 worker = RainJoinerWorker(filters)
-timer = None
+stop_timer = None
 
 
 def callback(ch, method, properties, body):
     worker.add_trip(body)
+
+    if worker.received_stop() and stop_timer is None:
+        stop_timer = Timer(SYNC_WAIT, channel.start_consuming)
+        stop_timer.start()
     ch.basic_ack(delivery_tag=method.delivery_tag)
-
-    if worker.received_stop() and timer is None:
-        timer = Timer(SYNC_WAIT, channel.start_consuming)
-        timer.start()
-
 
     if worker.has_finished():
         print(f"Rain Joiner Has Finsihed Its Work")
         worker.send_query()
         print(f"Rain Joiner Has Sent The Query")
-        timer.cancel()
+        stop_timer.cancel()
         channel.stop_consuming()
 
 channel.basic_qos(prefetch_count=1)
