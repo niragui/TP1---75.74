@@ -13,6 +13,8 @@ MIN_QUERY_MONTERAL = 6000
 TEN_MINUTES = 60 * 10
 SERVER_QUEUE = "server_queue"
 
+TRIP_ANNOUNCE = 5000
+
 
 class YearJoinerWorker():
     def __init__(self, filters):
@@ -21,6 +23,7 @@ class YearJoinerWorker():
         self.ends_found = 0
         self.time_ask = None
         self.names = {}
+        self.trips_joined = 0
 
         self.connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='rabbitmq'))
@@ -34,6 +37,11 @@ class YearJoinerWorker():
             self.ends_found += 1
             self.time_ask = time()
         else:
+            before = self.trips_joined
+            self.trips_joined += len(data)
+            change = before%TRIP_ANNOUNCE - self.trips_joined%TRIP_ANNOUNCE
+            if change > 0:
+                print(f"Trips Joined: {self.trips_joined}")
             for value in data:
                 code = value[0]
                 name = value[1]

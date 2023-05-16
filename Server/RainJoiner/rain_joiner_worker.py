@@ -12,6 +12,8 @@ from constants import STOP_TYPE
 TEN_MINUTES = 60 * 10
 SERVER_QUEUE = "server_queue"
 
+TRIP_ANNOUNCE = 5000
+
 
 class RainJoinerWorker():
     def __init__(self, filters):
@@ -19,6 +21,7 @@ class RainJoinerWorker():
         self.filters = filters
         self.ends_found = 0
         self.time_ask = None
+        self.trips_joined = 0
 
         self.connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='rabbitmq'))
@@ -32,6 +35,11 @@ class RainJoinerWorker():
             self.ends_found += 1
             self.time_ask = time()
         else:
+            before = self.trips_joined
+            self.trips_joined += len(data)
+            change = before%TRIP_ANNOUNCE - self.trips_joined%TRIP_ANNOUNCE
+            if change > 0:
+                print(f"Trips Joined: {self.trips_joined}")
             for value in data:
                 self.joiner.update(value)
 
