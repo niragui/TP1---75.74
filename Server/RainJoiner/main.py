@@ -23,12 +23,16 @@ channel.queue_declare(queue=READ_QUEUE, durable=True)
 
 worker = RainJoinerWorker(filters)
 
+def stop_reading(channel):
+    if channel.isopen():
+        channel.stop_consuming()
+
 
 def callback(ch, method, properties, body):
     worker.add_trip(body)
 
     if worker.received_stop():
-        stop_timer = Timer(SYNC_WAIT, channel.start_consuming)
+        stop_timer = Timer(SYNC_WAIT, stop_reading, [channel])
         worker.start_stopper(stop_timer)
 
     ch.basic_ack(delivery_tag=method.delivery_tag)
@@ -44,4 +48,3 @@ channel.basic_consume(queue=READ_QUEUE, on_message_callback=callback)
 
 channel.start_consuming()
 connection.close()
-worker.cancel_stopper()
