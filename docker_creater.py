@@ -23,6 +23,24 @@ def get_number(text):
         except:
             numero = input(text+" PLEASE INSERT A NUMBER ")
 
+def add_server(file, parsers):
+    file.write("  server:")
+    file.write("    container_name: server")
+    file.write("    image: server:latest")
+    file.write("    restart: on-failure")
+    file.write("    depends_on:")
+    file.write("      rabbitmq:")
+    file.write("        condition: service_healthy")
+    file.write("    links: ")
+    file.write("      - rabbitmq")
+    file.write("    networks:")
+    file.write("      - testing_net")
+    file.write("    environment:")
+    file.write("      - PYTHONUNBUFFERED=1")
+    file.write(f"      - PARSERS={parsers}")
+    file.write("    volumes:")
+    file.write("      - ./Server/Server/config.ini:/config.ini")
+
 def add_filter_general(file):
     file.write("    restart: on-failure\n")
     file.write("    depends_on:\n")
