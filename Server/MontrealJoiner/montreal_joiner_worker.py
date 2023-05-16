@@ -54,6 +54,9 @@ class MontrealJoinerWorker():
 
         return ends_found or elapsed_time >= TEN_MINUTES
 
+    def received_stop(self):
+        return self.ends_found > 0
+
     def get_parsed_values(self, values):
         aux = []
 
