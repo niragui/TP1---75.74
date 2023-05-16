@@ -13,6 +13,7 @@ from station import Station
 
 
 WRITE_QUEUE = "year_joiner_queue"
+TRIP_ANNOUNCE = 10000
 
 
 class YearFilterWorker():
@@ -39,7 +40,7 @@ class YearFilterWorker():
         values = []
         before = self.trips_filtered
         self.trips_filtered += len(trips)
-        change = before%1000 - self.trips_filtered%1000
+        change = before%TRIP_ANNOUNCE - self.trips_filtered%TRIP_ANNOUNCE
         if change > 0:
             print(f"Trips Filtered: {self.trips_filtered}")
 

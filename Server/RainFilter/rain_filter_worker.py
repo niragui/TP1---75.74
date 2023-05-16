@@ -14,6 +14,7 @@ from weather import Weather
 
 
 WRITE_QUEUE = "rain_joiner_queue"
+TRIP_ANNOUNCE = 10000
 
 
 class RainFilterWorker():
@@ -40,7 +41,7 @@ class RainFilterWorker():
         values = []
         before = self.trips_filtered
         self.trips_filtered += len(trips)
-        change = before%1000 - self.trips_filtered%1000
+        change = before%TRIP_ANNOUNCE - self.trips_filtered%TRIP_ANNOUNCE
         if change > 0:
             print(f"Trips Filtered: {self.trips_filtered}")
         values = []
