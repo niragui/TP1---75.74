@@ -22,15 +22,14 @@ channel = connection.channel()
 channel.queue_declare(queue=READ_QUEUE, durable=True)
 
 worker = MontrealJoinerWorker(filters)
-stop_timer = None
 
 
 def callback(ch, method, properties, body):
     worker.add_trip(body)
 
-    if stop_timer is None and worker.received_stop():
+    if worker.received_stop():
         stop_timer = Timer(SYNC_WAIT, channel.start_consuming)
-        stop_timer.start()
+        worker.start_stopper(stop_timer)
 
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
@@ -38,7 +37,7 @@ def callback(ch, method, properties, body):
         print(f"Montreal Joiner Has Finsihed Its Work")
         worker.send_query()
         print(f"Montreal Joiner Has Sent The Query")
-        stop_timer.cancel()
+        worker.cancel_stopper()
         channel.stop_consuming()
 
 

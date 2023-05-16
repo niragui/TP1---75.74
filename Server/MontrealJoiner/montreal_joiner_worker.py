@@ -23,6 +23,7 @@ class MontrealJoinerWorker():
         self.ends_found = 0
         self.time_ask = None
         self.trips_joined = 0
+        self.stopper = None
 
         self.connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='rabbitmq'))
@@ -56,6 +57,14 @@ class MontrealJoinerWorker():
 
     def received_stop(self):
         return self.ends_found > 0
+
+    def start_stopper(self, stopper):
+        self.stopper = stopper
+        self.stopper.start()
+
+    def cancel_stopper(self):
+        if self.stopper:
+            self.stopper.cancel()
 
     def get_parsed_values(self, values):
         aux = []
