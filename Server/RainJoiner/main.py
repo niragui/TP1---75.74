@@ -37,7 +37,6 @@ def callback(ch, method, properties, body):
         print(f"Rain Joiner Has Finsihed Its Work")
         worker.send_query()
         print(f"Rain Joiner Has Sent The Query")
-        worker.cancel_stopper()
         channel.stop_consuming()
 
 channel.basic_qos(prefetch_count=1)
@@ -45,3 +44,4 @@ channel.basic_consume(queue=READ_QUEUE, on_message_callback=callback)
 
 channel.start_consuming()
 connection.close()
+worker.cancel_stopper()
