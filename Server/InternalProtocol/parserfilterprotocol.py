@@ -74,7 +74,6 @@ class Message():
         string_json = json.dumps(self.content).encode(ENCODING)
 
         bytes += string_json
-        print(f"Sending: {self.type}{self.content}")
 
         return bytes
 
@@ -139,7 +138,7 @@ def parse_message_line(elements, type):
         elif type == WEATHER_TYPE:
             return WEATHER_TYPE, parse_weathers(elements)
         elif type == STOP_TYPE:
-            return STOP_TYPE, STOP_TYPE
+            return STOP_TYPE, elements
         elif type == FIRST_TRIP:
             return FIRST_TRIP, FIRST_TRIP
         else:
