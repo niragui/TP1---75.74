@@ -18,12 +18,13 @@ FILES.update({WEATHER_CLIENT_TYPE: "weather.csv"})
 
 
 def count_time(start_time, end_time):
-    seconds = round(end_time-start_time, 2)
-    minutes = seconds//60
-    seconds = round(seconds % 60, 2)
-    hours = minutes//60
-    minutes = round(minutes % 60, 2)
-    return f"{hours}:{minutes}:{seconds}"
+    seconds = seconds % (24 * 3600)
+    hour = seconds // 3600
+    seconds %= 3600
+    minutes = seconds // 60
+    seconds %= 60
+
+    return "%d:%02d:%02d" % (hour, minutes, seconds)
 
 
 class Client():
