@@ -70,8 +70,6 @@ class MontrealJoinerWorker():
     def get_parsed_values(self, values):
         aux = []
 
-        print(values)
-
         for station, average in values.items():
             if average > MIN_QUERY_MONTERAL:
                 aux.append(station)

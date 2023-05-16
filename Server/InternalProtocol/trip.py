@@ -19,10 +19,6 @@ class Trip():
         try:
             return start.get_distance_to(end)
         except:
-            if start is None:
-                print(f"Station {self.get_station_start()} Wasn't Found")
-            elif end is None:
-                print(f"Station {self.get_station_end()} Wasn't Found")
             return None
 
     def time(self):

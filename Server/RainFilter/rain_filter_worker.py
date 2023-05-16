@@ -79,7 +79,6 @@ class RainFilterWorker():
 
     def process_stop(self, sender, bytes_read):
         if sender in self.stops_received:
-            print(f"Stop From {sender} Already Received")
             self.channel.basic_publish(exchange='',
                                        routing_key=self.trips_queue,
                                        body=bytes_read,
