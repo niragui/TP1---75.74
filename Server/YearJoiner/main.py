@@ -24,7 +24,7 @@ channel.queue_declare(queue=READ_QUEUE, durable=True)
 worker = YearJoinerWorker(filters)
 
 def stop_reading(channel):
-    if channel.isopen():
+    if channel.is_open:
         channel.stop_consuming()
 
 
