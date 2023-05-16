@@ -22,7 +22,6 @@ class MontrealJoinerWorker():
         self.filters = filters
         self.ends_found = 0
         self.time_ask = None
-        self.names = {}
         self.trips_joined = 0
 
         self.connection = pika.BlockingConnection(
@@ -44,10 +43,7 @@ class MontrealJoinerWorker():
                 print(f"Trips Joined: {self.trips_joined}")
 
             for value in data:
-                code = value[0]
-                name = value[1]
-                self.names.update({code: name})
-                self.joiner.update((value[0], value[2]))
+                self.joiner.update(value)
 
     def has_finished(self):
         ends_found = self.ends_found >= self.filters
@@ -65,9 +61,7 @@ class MontrealJoinerWorker():
 
         for station, average in values.items():
             if average > MIN_QUERY_MONTERAL:
-                name = self.names.get(station)
-                print(f"{station} [{name}] Added Cause Average Is: {average}")
-                aux.append(name)
+                aux.append(station)
 
         return aux
 

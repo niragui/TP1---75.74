@@ -19,4 +19,4 @@ class MontrealFilter():
         station = self.trip.get_station_end()
         station_ent = self.stations.get(station)
         name = station_ent.name
-        return (station, name, distance)
+        return (name, distance)

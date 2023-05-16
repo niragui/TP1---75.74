@@ -24,6 +24,6 @@ class YearFilter():
         station_ent = self.stations.get(station)
         name = station_ent.name
         if year == 2016:
-            return (station, name, NEGATIVE_VALUE)
+            return (name, NEGATIVE_VALUE)
         else:
-            return (station, name, POSITIVE_VALUE)
+            return (name, POSITIVE_VALUE)
