@@ -57,6 +57,9 @@ def parse_trips(data, city):
         end_time = data_trip[2]
         end_time = datetime.datetime.strptime(end_time, TIME_FORMAT)
         end_station = data_trip[3]
+        year_id = data_trip[6]
+        start_station += "-"+year_id
+        end_station += "-"+year_id
 
         trip = Trip(start_station, end_station, start_time, end_time, city)
         trips.append(trip)
@@ -72,8 +75,9 @@ def parse_stations(data, city):
 
     for data_station in data:
         code = data_station[0]
+        year_id = data_station[4]
+        code += "-"+year_id
         name = data_station[1]
-        code += name
         if len(data_station[2]) == 0:
             latitude = 0
         else:
