@@ -1,8 +1,3 @@
-
-
-lines = input("How Many Likes You'd Like To Save?")
-
-
 def get_number(text):
     numero = input(text).replace(".", "").replace(",", "")
 
