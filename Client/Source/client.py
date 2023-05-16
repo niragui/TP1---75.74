@@ -6,7 +6,7 @@ from serverclientprotocol import TRIP_CLIENT_TYPE, STATION_CLIENT_TYPE, WEATHER_
 from serverclientprotocol import ClientMessage, send_query, read_query
 
 ENCODING = "utf-8"
-BATCH_AMOUNT = 100
+BATCH_AMOUNT = 200
 
 TOTAL_QUERIES = 3
 
