@@ -119,7 +119,7 @@ def parse_weathers(data):
 
     for data_weather in data:
         date = data_weather.get("date")
-        date = datetime.date.fromisoformat(date)
+        date = datetime.date.fromisoformat(date)-datetime.timedelta(days=1)
         prec_tot = data_weather.get("prec_tot")
         city = data_weather.get("city")
 

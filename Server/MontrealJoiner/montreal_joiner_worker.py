@@ -9,7 +9,7 @@ from joinerprotocol import read_message
 from constants import STOP_TYPE
 from joinerserverprotocol import ENCODING
 
-MIN_QUERY_MONTERAL = 6000
+MIN_QUERY_MONTERAL = 6
 TEN_MINUTES = 60 * 10
 SERVER_QUEUE = "server_queue"
 

@@ -21,6 +21,6 @@ class RainFilter():
 
         if weather.is_rainy(PRECIPITATION_LIMIT):
             precipitation = weather.get_rain()
-            return precipitation
+            return (start.isoformat(), precipitation)
         else:
             return None

@@ -3,7 +3,7 @@ import pika
 
 from time import time
 
-from average_joiner import AverageJoiner
+from average_dict_joiner import AverageDictJoiner
 
 from joinerprotocol import read_message
 from joinerserverprotocol import ENCODING
@@ -17,7 +17,7 @@ TRIP_ANNOUNCE = 5000
 
 class RainJoinerWorker():
     def __init__(self, filters):
-        self.joiner = AverageJoiner()
+        self.joiner = AverageDictJoiner()
         self.filters = filters
         self.ends_found = 0
         self.time_ask = None
