@@ -28,7 +28,7 @@ stop_timer = None
 def callback(ch, method, properties, body):
     worker.add_trip(body)
 
-    if worker.received_stop() and stop_timer is None:
+    if stop_timer is None and worker.received_stop():
         stop_timer = Timer(SYNC_WAIT, channel.start_consuming)
         stop_timer.start()
     ch.basic_ack(delivery_tag=method.delivery_tag)
