@@ -6,6 +6,7 @@ from rain_joiner_worker import RainJoinerWorker
 
 def main():
     time.sleep(10)
+    print("Up!")
 
     filters = int(os.environ["FILTER"])
 

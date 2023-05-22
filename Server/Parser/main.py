@@ -7,6 +7,7 @@ from parser import Parser
 def main():
     # Wait for rabbitmq to come up
     time.sleep(10)
+    print("Up!")
 
     consumer_id = os.environ["PARSER_ID"]
     rains = int(os.environ["RAIN"])

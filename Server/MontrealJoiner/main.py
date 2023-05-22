@@ -6,6 +6,7 @@ from montreal_joiner_worker import MontrealJoinerWorker
 
 def main():
     time.sleep(10)
+    print("Up!")
 
     filters = int(os.environ["FILTER"])
 

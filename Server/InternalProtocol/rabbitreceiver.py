@@ -7,6 +7,8 @@ class RabbitReceiver():
     def __init__(self, channel, queue_name=None, exchange=None) -> None:
         self.channel = channel
         if exchange:
+            self.channel.exchange_declare(exchange=exchange,
+                                          exchange_type='fanout')
             self.queue = self.channel.queue_declare(queue="", durable=True).method.queue
             self.channel.queue_bind(self.queue, exchange)
         elif queue_name:
