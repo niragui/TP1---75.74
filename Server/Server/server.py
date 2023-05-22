@@ -57,8 +57,6 @@ class Server:
 
         self.server_queue.receive(self.read_query)
 
-        self.channel.start_consuming()
-
     def publish_trip(self, lines):
         message = Message(TRIP_TYPE, lines, self.city)
         bytes_to_send = message.create_message()
