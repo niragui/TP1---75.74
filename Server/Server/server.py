@@ -82,7 +82,7 @@ class Server:
 
     def __handle_client_connection(self):
         while True:
-            info_type, info = read_client_message(self.client_sock)
+            info_type, info = read_client_message(self.client_socket)
             if info_type == QUERY_CLIENT_TYPE:
                 self.mode = QUERY_CLIENT_TYPE
                 break
