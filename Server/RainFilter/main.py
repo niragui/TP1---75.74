@@ -5,7 +5,7 @@ from rain_filter_worker import RainFilterWorker
 
 
 def main():
-    time.sleep(10)
+    time.sleep(15)
 
     parsers = int(os.environ["PARSERS"])
     worker = RainFilterWorker(parsers)

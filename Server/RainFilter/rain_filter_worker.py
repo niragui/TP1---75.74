@@ -27,6 +27,7 @@ class RainFilterWorker():
         self.stops_received = []
         self.parsers = parsers
         self.trips_filtered = 0
+        self.connection = RabbitConnection()
 
         self.joiner_queue = self.connection.create_queue_sender(queue_name=WRITE_QUEUE)
         self.stop_queue = self.connection.create_queue_sender(queue_name=READ_TRIPS_QUEUE)

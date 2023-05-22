@@ -5,7 +5,7 @@ from montreal_filter_worker import MontrealFilterWorker
 
 
 def main():
-    time.sleep(10)
+    time.sleep(15)
 
     parsers = int(os.environ["PARSERS"])
     worker = MontrealFilterWorker(parsers)
