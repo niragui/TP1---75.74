@@ -95,6 +95,7 @@ class MontrealFilterWorker():
                 self.notify_stop()
         elif ent_type == FIRST_TRIP:
             self.trips_start_received += 1
+            print(f"First Trip! Received: {self.trips_start_received}")
             if self.received_trip():
                 print("Finished Reading Stations")
                 self.stations_queue.close()
