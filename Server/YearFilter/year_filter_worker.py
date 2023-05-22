@@ -14,11 +14,11 @@ from station import Station
 WRITE_QUEUE = "year_joiner_queue"
 TRIP_ANNOUNCE = 1000000
 
-READ_TRIPS_QUEUE = "montreal_trips_queue"
+READ_TRIPS_QUEUE = "year_trips_queue"
 STATIONS_EXCHANGE = "stations"
 
 
-class MontrealFilterWorker():
+class YearFilterWorker():
     def __init__(self, parsers):
         self.stations = {}
         self.trips_start_received = 0

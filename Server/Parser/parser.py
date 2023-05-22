@@ -32,7 +32,7 @@ class Parser():
         self.connection = RabbitConnection()
         self.id = pars_id
 
-        self.data_queue = self.connection.self.connection.create_queue_receiver(queue_name=DATA_QUEUE)
+        self.data_queue = self.connection..create_queue_receiver(queue_name=DATA_QUEUE)
         self.stations_queue = self.connection.create_queue_sender(exchange=STATIONS_EXCHANGE)
         self.weather_queue = self.connection.create_queue_sender(exchange=WEATHER_EXCHANGE)
 
