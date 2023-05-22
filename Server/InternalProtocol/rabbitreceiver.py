@@ -25,6 +25,7 @@ class RabbitReceiver():
         self.user_method = receiver
         self.channel.basic_qos(prefetch_count=prefetch)
         self.channel.basic_consume(queue=self.queue, on_message_callback=self.callback)
+        self.channel.start_consuming()
 
     def close(self):
         if self.channel.is_open:
