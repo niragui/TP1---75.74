@@ -100,7 +100,10 @@ class Server:
     def exit_gracefully(self):
         self.__del__()
 
-    def __del__(self):
+    def stop(self):
         self.is_awake = False
         self._server_socket.close()
         self.connection.close()
+
+    def __del__(self):
+        self.stop()
