@@ -1,2 +1,6 @@
 # Ignore all files named trips.csv
 **/trips.csv
+**/weather.csv
+**/stations.csv
+client-docker-compose-dev.yaml
+server-docker-compose-dev.yaml
