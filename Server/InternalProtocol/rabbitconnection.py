@@ -23,4 +23,3 @@ class RabbitConnection():
             self.channel.close()
         if self.connection.is_open:
             self.connection.close()
-

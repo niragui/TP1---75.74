@@ -27,7 +27,6 @@ def add_server(file, parsers):
     file.write("  server:\n")
     file.write("    container_name: server\n")
     file.write("    image: server:latest\n")
-    file.write("    restart: on-failure\n")
     file.write("    depends_on:\n")
     file.write("      rabbitmq:\n")
     file.write("        condition: service_healthy\n")
@@ -42,7 +41,6 @@ def add_server(file, parsers):
     file.write("      - ./Server/Server/config.ini:/config.ini\n")
 
 def add_filter_general(file):
-    file.write("    restart: on-failure\n")
     file.write("    depends_on:\n")
     file.write("      rabbitmq:\n")
     file.write("        condition: service_healthy\n")
