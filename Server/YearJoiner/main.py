@@ -1,5 +1,6 @@
 import time
 import os
+import signal
 
 from year_joiner_worker import YearJoinerWorker
 

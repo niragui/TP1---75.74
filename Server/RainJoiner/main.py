@@ -1,5 +1,6 @@
 import time
 import os
+import signal
 
 from rain_joiner_worker import RainJoinerWorker
 
