@@ -5,7 +5,7 @@ from typing import List
 from rain_filter import RainFilter
 
 from parserfilterprotocol import read_message, FIRST_TRIP, TRIP_TYPE, WEATHER_TYPE
-
+from rabbitconnection import RabbitConnection
 from joinerprotocol import JoinerMessage
 
 from constants import STOP_TYPE
@@ -16,27 +16,28 @@ from weather import Weather
 WRITE_QUEUE = "rain_joiner_queue"
 TRIP_ANNOUNCE = 1000000
 
+READ_TRIPS_QUEUE = "rain_trips_queue"
+WEATHER_EXCHANGE = "weathers"
+
 
 class RainFilterWorker():
-    def __init__(self, parsers, queue):
+    def __init__(self, parsers):
         self.weathers = {}
         self.trips_start_received = 0
         self.stops_received = []
         self.parsers = parsers
         self.trips_filtered = 0
-        self.trips_queue = queue
+        self.connection = RabbitConnection()
 
-        self.connection = pika.BlockingConnection(
-        pika.ConnectionParameters(host='rabbitmq'))
-        self.channel = self.connection.channel()
+        self.joiner_queue = self.connection.create_queue_sender(queue_name=WRITE_QUEUE)
+        self.stop_queue = self.connection.create_queue_sender(queue_name=READ_TRIPS_QUEUE)
+        self.trips_queue = self.connection.create_queue_receiver(queue_name=READ_TRIPS_QUEUE)
+        self.weathers_queue = self.connection.create_queue_receiver(exchange=WEATHER_EXCHANGE)
 
     def send_value(self, value):
         message = JoinerMessage(value)
         bytes_to_send = message.create_message()
-        self.channel.basic_publish(exchange='',
-                                   routing_key=WRITE_QUEUE,
-                                   body=bytes_to_send,
-                                   properties=pika.BasicProperties(delivery_mode=2))
+        self.joiner_queue.send(bytes_to_send)
 
     def process_trips(self, trips: List[Trip]):
         values = []
@@ -72,17 +73,11 @@ class RainFilterWorker():
     def notify_stop(self):
         message = JoinerMessage(STOP_TYPE)
         bytes_to_send = message.create_message()
-        self.channel.basic_publish(exchange='',
-                                   routing_key=WRITE_QUEUE,
-                                   body=bytes_to_send,
-                                   properties=pika.BasicProperties(delivery_mode=2))
+        self.joiner_queue.send(bytes_to_send)
 
     def process_stop(self, sender, bytes_read):
         if sender in self.stops_received:
-            self.channel.basic_publish(exchange='',
-                                       routing_key=self.trips_queue,
-                                       body=bytes_read,
-                                       properties=pika.BasicProperties(delivery_mode=2))
+            self.stop_queue.send(bytes_read)
         else:
             print(f"Received Stop From {sender}")
             self.stops_received.append(sender)
@@ -96,7 +91,22 @@ class RainFilterWorker():
             self.process_weathers(entity)
         elif ent_type == STOP_TYPE:
             self.process_stop(entity, body_read)
+            if self.received_stop():
+                print("Finished Reading Trips")
+                self.trips_queue.close()
+                self.notify_stop()
         elif ent_type == FIRST_TRIP:
             self.trips_start_received += 1
+            if self.received_trip():
+                print("Finished Reading Stations")
+                self.weathers_queue.close()
         else:
             raise Exception(f"Type Received Don't Make Sense {ent_type}")
+
+    def run(self):
+        self.weathers_queue.receive(self.add_data)
+        self.trips_queue.receive(self.add_data)
+        self.connection.close()
+
+    def stop(self):
+        self.connection.close()
