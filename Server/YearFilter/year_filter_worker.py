@@ -105,3 +105,7 @@ class YearFilterWorker():
         self.stations_queue.receive(self.add_data)
         self.trips_queue.receive(self.add_data)
         self.connection.close()
+
+    def stop(self):
+        self.connection.close()
+

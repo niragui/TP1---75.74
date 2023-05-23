@@ -77,9 +77,13 @@ class RainJoinerWorker():
         self.query_queue.send(bytes_to_send)
 
     def __del__(self):
-        self.trips_queue.close()
+        self.connection.close()
 
     def run(self):
         self.trips_queue.receive(self.handle_message)
         self.trips_queue.close()
         self.send_query()
+        self.connection.close()
+
+    def stop(self):
+        self.connection.close()

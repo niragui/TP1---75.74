@@ -1,5 +1,6 @@
 import time
 import os
+import signal
 
 from rain_filter_worker import RainFilterWorker
 
@@ -11,6 +12,7 @@ def main():
     parsers = int(os.environ["PARSERS"])
     worker = RainFilterWorker(parsers)
 
+    signal.signal(signal.SIGINT, worker.stop)
     worker.run()
 
 

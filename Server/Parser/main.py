@@ -1,5 +1,6 @@
 import time
 import os
+import signal
 
 from parser import Parser
 
@@ -15,6 +16,8 @@ def main():
     years = int(os.environ["YEAR"])
 
     parser = Parser(consumer_id, rains, montreals, years)
+
+    signal.signal(signal.SIGINT, parser.stop)
     parser.run()
 
 

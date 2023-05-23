@@ -1,5 +1,6 @@
 import time
 import os
+import signal
 
 from montreal_joiner_worker import MontrealJoinerWorker
 
@@ -12,6 +13,7 @@ def main():
 
     worker = MontrealJoinerWorker(filters)
 
+    signal.signal(signal.SIGINT, worker.stop)
     worker.run()
 
 

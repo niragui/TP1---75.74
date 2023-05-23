@@ -12,8 +12,8 @@ def main():
 
     worker = YearJoinerWorker(filters)
 
+    signal.signal(signal.SIGINT, worker.stop)
     worker.run()
-
 
 if __name__ == "__main__":
     main()

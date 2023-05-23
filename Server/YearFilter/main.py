@@ -1,5 +1,6 @@
 import time
 import os
+import signal
 
 from year_filter_worker import YearFilterWorker
 
@@ -10,7 +11,8 @@ def main():
 
     parsers = int(os.environ["PARSERS"])
     worker = YearFilterWorker(parsers)
-
+    
+    signal.signal(signal.SIGINT, worker.stop)
     worker.run()
 
 

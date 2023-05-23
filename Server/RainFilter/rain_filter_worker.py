@@ -107,3 +107,6 @@ class RainFilterWorker():
         self.weathers_queue.receive(self.add_data)
         self.trips_queue.receive(self.add_data)
         self.connection.close()
+
+    def stop(self):
+        self.connection.close()

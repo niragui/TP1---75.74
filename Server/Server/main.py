@@ -1,6 +1,7 @@
 from configparser import ConfigParser
 from server import Server
 import os
+import signal
 
 
 def initialize_config():
@@ -37,6 +38,8 @@ def main():
 
     # Initialize server and start server loop
     server = Server(port, parsers)
+
+    signal.signal(signal.SIGINT, server.stop)
     server.run()
 
 if __name__ == "__main__":

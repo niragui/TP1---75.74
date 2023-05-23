@@ -1,5 +1,6 @@
 import time
 import os
+import signal
 
 from montreal_filter_worker import MontrealFilterWorker
 
@@ -11,6 +12,7 @@ def main():
     parsers = int(os.environ["PARSERS"])
     worker = MontrealFilterWorker(parsers)
 
+    signal.signal(signal.SIGINT, worker.stop)
     worker.run()
 
 
