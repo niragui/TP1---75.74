@@ -1,5 +1,4 @@
 import json
-import pika
 
 from time import time
 from threading import Timer

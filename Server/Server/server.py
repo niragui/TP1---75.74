@@ -103,6 +103,8 @@ class Server:
     def stop(self):
         self.is_awake = False
         self._server_socket.close()
+        if self.client_socket:
+            self.client_socket.close()
         self.connection.close()
 
     def __del__(self):

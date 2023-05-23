@@ -1,6 +1,4 @@
-import pika
 from typing import List
-
 
 from rain_filter import RainFilter
 

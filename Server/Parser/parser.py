@@ -1,11 +1,6 @@
-import pika
-
 from serverparserprotocol import read_message, TRIP_TYPE, STATION_TYPE, WEATHER_TYPE
 from parserfilterprotocol import FIRST_TRIP, Message
 from constants import STOP_TYPE
-from trip import Trip
-from weather import Weather
-from station import Station
 
 from rabbitconnection import RabbitConnection
 
